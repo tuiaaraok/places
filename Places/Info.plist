@@ -2,9 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>$(PRODUCT_NAME) photo use</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Radomir Tinkov - Gilroy-ExtraBold.otf</string>
+		<string>gilroy-bold.ttf</string>
+		<string>gilroy-medium.ttf</string>
+		<string>gilroy-regular.ttf</string>
+		<string>gilroy-semibold.ttf</string>
+		<string>gilroy-thin.ttf</string>
 		<string>Radomir Tinkov - Gilroy-Light.otf</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
