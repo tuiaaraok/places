@@ -13,6 +13,9 @@
 		63C01F6A24C828B00053A104 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63C01F6824C828B00053A104 /* Main.storyboard */; };
 		63C01F6C24C828B10053A104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63C01F6B24C828B10053A104 /* Assets.xcassets */; };
 		63C01F6F24C828B10053A104 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63C01F6D24C828B10053A104 /* LaunchScreen.storyboard */; };
+		63C01F7D24C835E60053A104 /* Radomir Tinkov - Gilroy-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63C01F7C24C835380053A104 /* Radomir Tinkov - Gilroy-Light.otf */; };
+		63C01F7E24C835E80053A104 /* Radomir Tinkov - Gilroy-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 63C01F7B24C835360053A104 /* Radomir Tinkov - Gilroy-ExtraBold.otf */; };
+		63C01F8024C837F60053A104 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C01F7F24C837F60053A104 /* CustomTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		63C01F6B24C828B10053A104 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		63C01F6E24C828B10053A104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63C01F7024C828B10053A104 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63C01F7B24C835360053A104 /* Radomir Tinkov - Gilroy-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Radomir Tinkov - Gilroy-ExtraBold.otf"; sourceTree = "<group>"; };
+		63C01F7C24C835380053A104 /* Radomir Tinkov - Gilroy-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Radomir Tinkov - Gilroy-Light.otf"; sourceTree = "<group>"; };
+		63C01F7F24C837F60053A104 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +48,7 @@
 			children = (
 				63C01F6124C828B00053A104 /* Places */,
 				63C01F6024C828B00053A104 /* Products */,
+				63C01F7A24C8352A0053A104 /* Fonts */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,11 +67,21 @@
 				63C01F6424C828B00053A104 /* SceneDelegate.swift */,
 				63C01F6624C828B00053A104 /* ViewController.swift */,
 				63C01F6824C828B00053A104 /* Main.storyboard */,
+				63C01F7F24C837F60053A104 /* CustomTableViewCell.swift */,
 				63C01F6B24C828B10053A104 /* Assets.xcassets */,
 				63C01F6D24C828B10053A104 /* LaunchScreen.storyboard */,
 				63C01F7024C828B10053A104 /* Info.plist */,
 			);
 			path = Places;
+			sourceTree = "<group>";
+		};
+		63C01F7A24C8352A0053A104 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				63C01F7B24C835360053A104 /* Radomir Tinkov - Gilroy-ExtraBold.otf */,
+				63C01F7C24C835380053A104 /* Radomir Tinkov - Gilroy-Light.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +144,9 @@
 			files = (
 				63C01F6F24C828B10053A104 /* LaunchScreen.storyboard in Resources */,
 				63C01F6C24C828B10053A104 /* Assets.xcassets in Resources */,
+				63C01F7E24C835E80053A104 /* Radomir Tinkov - Gilroy-ExtraBold.otf in Resources */,
 				63C01F6A24C828B00053A104 /* Main.storyboard in Resources */,
+				63C01F7D24C835E60053A104 /* Radomir Tinkov - Gilroy-Light.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +159,7 @@
 			files = (
 				63C01F6724C828B00053A104 /* ViewController.swift in Sources */,
 				63C01F6324C828B00053A104 /* AppDelegate.swift in Sources */,
+				63C01F8024C837F60053A104 /* CustomTableViewCell.swift in Sources */,
 				63C01F6524C828B00053A104 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

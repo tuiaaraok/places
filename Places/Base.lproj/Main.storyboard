@@ -6,8 +6,16 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Radomir Tinkov - Gilroy-ExtraBold.otf">
+            <string>Gilroy-ExtraBold</string>
+        </array>
+        <array key="Radomir Tinkov - Gilroy-Light.otf">
+            <string>Gilroy-Light</string>
+        </array>
+    </customFonts>
     <scenes>
-        <!--View Controller-->
+        <!--My Places-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Places" customModuleProvider="target" sceneMemberID="viewController">
@@ -19,13 +27,72 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="vdL-EW-IVj">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="85" id="vdL-EW-IVj" customClass="CustomTableViewCell" customModule="Places" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="85"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vdL-EW-IVj" id="7jG-AJ-MXy">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="85"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TBp-t3-4dn">
+                                                    <rect key="frame" x="12" y="5.5" width="74" height="74"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="74" id="Of4-Gc-H9o"/>
+                                                        <constraint firstAttribute="height" constant="74" id="aWW-gL-hsX"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Тип" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TIf-py-fWK">
+                                                    <rect key="frame" x="100" y="54" width="270" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="270" id="1JR-bG-P6E"/>
+                                                        <constraint firstAttribute="height" constant="20" id="ibU-xV-mh5"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Gilroy-Light" family="Gilroy" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Название" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2B-RQ-Mlo">
+                                                    <rect key="frame" x="100" y="11" width="239" height="23"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="23" id="Mej-re-myf"/>
+                                                        <constraint firstAttribute="width" constant="239" id="aWF-ga-5EQ"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Gilroy-ExtraBold" family="Gilroy" pointSize="18"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Местоположение" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lWP-e1-Q4H">
+                                                    <rect key="frame" x="100" y="37" width="239" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="4vd-gs-UD0"/>
+                                                        <constraint firstAttribute="height" constant="20" id="TwB-Nv-FRF"/>
+                                                        <constraint firstAttribute="width" constant="239" id="XpT-9M-iJL"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="239" id="tms-f6-nvL"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Gilroy-Light" family="Gilroy" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="lWP-e1-Q4H" secondAttribute="trailing" constant="55" id="4BR-zm-ypq"/>
+                                                <constraint firstItem="TIf-py-fWK" firstAttribute="bottom" secondItem="7jG-AJ-MXy" secondAttribute="bottomMargin" id="Wfj-r2-v2K"/>
+                                                <constraint firstItem="TBp-t3-4dn" firstAttribute="leading" secondItem="7jG-AJ-MXy" secondAttribute="leading" constant="12" id="YX6-DZ-GG6"/>
+                                                <constraint firstItem="W2B-RQ-Mlo" firstAttribute="top" secondItem="7jG-AJ-MXy" secondAttribute="topMargin" id="b3c-Po-NEo"/>
+                                                <constraint firstItem="TBp-t3-4dn" firstAttribute="centerY" secondItem="7jG-AJ-MXy" secondAttribute="centerY" id="bh5-hK-7bh"/>
+                                                <constraint firstItem="lWP-e1-Q4H" firstAttribute="leading" secondItem="TBp-t3-4dn" secondAttribute="trailing" constant="14" id="eYb-jV-O5x"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="lWP-e1-Q4H" secondAttribute="bottom" constant="17" id="nbF-th-3pi"/>
+                                                <constraint firstItem="lWP-e1-Q4H" firstAttribute="top" secondItem="W2B-RQ-Mlo" secondAttribute="bottom" constant="3" id="u8R-EZ-dgd"/>
+                                                <constraint firstItem="W2B-RQ-Mlo" firstAttribute="leading" secondItem="TBp-t3-4dn" secondAttribute="trailing" constant="14" id="wn3-T7-8Ll"/>
+                                                <constraint firstItem="TIf-py-fWK" firstAttribute="leading" secondItem="TBp-t3-4dn" secondAttribute="trailing" constant="14" id="zCG-ba-PeJ"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="locationLabel" destination="lWP-e1-Q4H" id="TCY-ec-NYp"/>
+                                            <outlet property="mainImage" destination="TBp-t3-4dn" id="X5S-Nh-BJv"/>
+                                            <outlet property="nameImage" destination="W2B-RQ-Mlo" id="1UB-SB-oIT"/>
+                                            <outlet property="typeLabel" destination="TIf-py-fWK" id="b2k-N3-Tbc"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -43,7 +110,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="OjX-KZ-e6e"/>
+                    <navigationItem key="navigationItem" title="My Places" id="OjX-KZ-e6e"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -57,6 +124,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5za-h3-1g7">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="Gilroy-ExtraBold" family="Gilroy" pointSize="21"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
