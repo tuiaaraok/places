@@ -26,11 +26,5 @@ class StorageManager {
         }
     }
     
-//    static func editObject (_ place: Place, newName: String?, newType: String?, newLocation: String?, newImage: Data) {
-//        
-//        try! realm.write {
-//            place.location = newLocation
-//            place.
-//        }
-//    }
+
 }

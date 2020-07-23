@@ -20,19 +20,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My Places" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nOI-Va-9v6">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Places" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nOI-Va-9v6">
                                 <rect key="frame" x="112" y="541" width="190" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="51" id="03A-7Q-Dm0"/>
+                                    <constraint firstAttribute="width" constant="190" id="Q7u-lH-03N"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Gilroy-ExtraBold" family="Gilroy" pointSize="41"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Шар" translatesAutoresizingMaskIntoConstraints="NO" id="H5r-g3-wiU">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Шар" translatesAutoresizingMaskIntoConstraints="NO" id="H5r-g3-wiU">
                                 <rect key="frame" x="40" y="174" width="335" height="337"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="337" id="FB1-b4-VWX"/>
+                                    <constraint firstAttribute="width" constant="335" id="MuX-fO-yvQ"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.6277194619178772" green="0.85013121366500854" blue="0.93828701972961426" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="H5r-g3-wiU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="AGf-Sy-IXY"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nOI-Va-9v6" secondAttribute="trailing" constant="112" id="CJP-cw-U0e"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="H5r-g3-wiU" secondAttribute="trailing" constant="39" id="hI9-R3-eIR"/>
+                            <constraint firstItem="H5r-g3-wiU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="130" id="hXp-0h-c99"/>
+                            <constraint firstItem="nOI-Va-9v6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="112" id="qIU-cV-s7Q"/>
+                            <constraint firstItem="nOI-Va-9v6" firstAttribute="top" secondItem="H5r-g3-wiU" secondAttribute="bottom" constant="30" id="tiy-oQ-tzJ"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>

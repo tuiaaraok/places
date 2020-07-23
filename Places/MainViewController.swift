@@ -9,16 +9,21 @@
 import UIKit
 import RealmSwift
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class   MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
  
     @IBOutlet var tableView: UITableView!
     
+    @IBOutlet var reversedSortingButton: UIBarButtonItem!
+    @IBOutlet var segmentedControl: UISegmentedControl!
     
     var places: Results<Place>!
+    var ascendingSorting = true
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.rowHeight = 85
         
         places = realm.objects(Place.self)
     }
@@ -80,7 +85,35 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
        
         tableView.reloadData()
     }
-
-
+    
+    @IBAction func sortSelection(_ sender: UISegmentedControl) {
+        
+       sorting()
+        }
+    
+    @IBAction func reversedSorting(_ sender: Any) {
+        
+        ascendingSorting.toggle()
+        
+        if ascendingSorting {
+            reversedSortingButton.image = #imageLiteral(resourceName: "AZ")
+        } else {
+            reversedSortingButton.image = #imageLiteral(resourceName: "ZA")
+        }
+        
+        sorting()
+        
+    }
+    
+    private func sorting() {
+        
+        if segmentedControl.selectedSegmentIndex == 0{ // если нулевой сегмент
+            places = places.sorted(byKeyPath: "date", ascending: ascendingSorting) // в завис от того, какое знач имеет свойство, сортировка будет  другой
+        } else {
+            places = places.sorted(byKeyPath: "name", ascending: ascendingSorting)
+        }
+        
+        tableView.reloadData()
+    }
 }
 

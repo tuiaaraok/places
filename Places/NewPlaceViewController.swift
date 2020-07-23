@@ -25,7 +25,7 @@ class NewPlaceViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.tableFooterView = UIView()
-        saveButton.isEnabled = false
+        saveButton.isEnabled = false // кнопка неактивна
         placeName.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged) // следит а тем, заполнено ли текстовое поле или нет. в заисимости от этого блок кнопки
         setupEditScreen()
     }
@@ -64,7 +64,7 @@ class NewPlaceViewController: UITableViewController {
             
             present(actionSheet, animated: true)
         } else {
-            view.endEditing(true)
+            view.endEditing(true) // убираем выделение
         }
     }
     
@@ -113,7 +113,7 @@ extension NewPlaceViewController: UITextFieldDelegate {
     
     @objc private func textFieldChanged() {
         
-        if placeName.text?.isEmpty == false  {
+        if placeName.text?.isEmpty == false  { // если строка заполнена, кнопка активизируется
             saveButton.isEnabled = true
         } else {
             saveButton.isEnabled = false
