@@ -41,14 +41,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TBp-t3-4dn">
-                                                    <rect key="frame" x="12" y="5.5" width="70" height="70"/>
+                                                    <rect key="frame" x="12" y="8" width="68" height="69"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="70" id="Of4-Gc-H9o"/>
                                                         <constraint firstAttribute="height" constant="70" id="aWW-gL-hsX"/>
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="d6u-Qg-2yA">
-                                                    <rect key="frame" x="98" y="8" width="300" height="69"/>
+                                                    <rect key="frame" x="98" y="8" width="205" height="69"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Название" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2B-RQ-Mlo">
                                                             <rect key="frame" x="0.0" y="0.0" width="83" height="23.5"/>
@@ -71,17 +71,44 @@
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.58835955900000003" green="0.82787717630000002" blue="0.92161188469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </stackView>
+                                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="90" placeholderIntrinsicHeight="14" translatesAutoresizingMaskIntoConstraints="NO" id="z8f-aL-FvT" customClass="CosmosView" customModule="Cosmos">
+                                                    <rect key="frame" x="311" y="35.5" width="90" height="14"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="90" id="orS-OX-COc"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="starSize">
+                                                            <real key="value" value="14"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="emptyBorderColor">
+                                                            <color key="value" red="0.58835955900000003" green="0.82787717630000002" blue="0.92161188469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="emptyBorderWidth">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="filledColor">
+                                                            <color key="value" red="0.58835955900000003" green="0.82787717630000002" blue="0.92161188469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="filledBorderColor">
+                                                            <color key="value" red="0.62771946190000005" green="0.8501312137" blue="0.93828701969999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="z8f-aL-FvT" firstAttribute="leading" secondItem="d6u-Qg-2yA" secondAttribute="trailing" constant="8" id="E1J-fN-eGi"/>
                                                 <constraint firstAttribute="bottom" secondItem="d6u-Qg-2yA" secondAttribute="bottom" constant="8" id="P4d-oq-eV5"/>
+                                                <constraint firstItem="z8f-aL-FvT" firstAttribute="centerY" secondItem="7jG-AJ-MXy" secondAttribute="centerY" id="P6b-sh-0LK"/>
                                                 <constraint firstItem="d6u-Qg-2yA" firstAttribute="leading" secondItem="TBp-t3-4dn" secondAttribute="trailing" constant="16" id="WVy-cE-I89"/>
                                                 <constraint firstItem="TBp-t3-4dn" firstAttribute="leading" secondItem="7jG-AJ-MXy" secondAttribute="leading" constant="12" id="YX6-DZ-GG6"/>
-                                                <constraint firstAttribute="trailing" secondItem="d6u-Qg-2yA" secondAttribute="trailing" constant="16" id="Z8d-TA-1Ce"/>
                                                 <constraint firstItem="TBp-t3-4dn" firstAttribute="centerY" secondItem="7jG-AJ-MXy" secondAttribute="centerY" id="bh5-hK-7bh"/>
+                                                <constraint firstAttribute="trailing" secondItem="z8f-aL-FvT" secondAttribute="trailing" constant="13" id="oZf-2W-eF6"/>
                                                 <constraint firstItem="d6u-Qg-2yA" firstAttribute="top" secondItem="7jG-AJ-MXy" secondAttribute="top" constant="8" id="yJX-jz-Dcf"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="cosmosView" destination="z8f-aL-FvT" id="bxq-Np-mhe"/>
                                             <outlet property="locationLabel" destination="lWP-e1-Q4H" id="TCY-ec-NYp"/>
                                             <outlet property="mainImage" destination="TBp-t3-4dn" id="X5S-Nh-BJv"/>
                                             <outlet property="nameLabel" destination="W2B-RQ-Mlo" id="1UB-SB-oIT"/>
@@ -95,18 +122,19 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="YMS-H7-VBM"/>
                                 </connections>
                             </tableView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="5iJ-1y-JIN">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="5iJ-1y-JIN">
                                 <rect key="frame" x="0.0" y="88" width="414" height="32"/>
                                 <segments>
-                                    <segment title="По дате"/>
-                                    <segment title="По имени"/>
+                                    <segment title="" image="clock" catalog="system"/>
+                                    <segment title="" image="textformat.alt" catalog="system"/>
                                 </segments>
+                                <color key="tintColor" red="0.62771946190000005" green="0.8501312137" blue="0.93828701969999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="sortSelection:" destination="BYZ-38-t0r" eventType="valueChanged" id="hDq-j7-YaI"/>
                                 </connections>
                             </segmentedControl>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" red="0.62771946190000005" green="0.8501312137" blue="0.93828701969999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="nvB-Iy-dpE" secondAttribute="bottom" id="FRb-d9-GIh"/>
                             <constraint firstItem="nvB-Iy-dpE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="dfY-a1-XFX"/>
@@ -160,8 +188,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="addImage" translatesAutoresizingMaskIntoConstraints="NO" id="yMl-ca-40G">
-                                                    <rect key="frame" x="0.0" y="-29" width="414" height="414"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addImage" translatesAutoresizingMaskIntoConstraints="NO" id="yMl-ca-40G">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
                                                     <color key="backgroundColor" red="0.62771946190000005" green="0.8501312137" blue="0.93828701969999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </imageView>
                                             </subviews>
@@ -278,6 +306,56 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="75" id="1QF-5L-539">
+                                        <rect key="frame" x="0.0" y="667" width="414" height="75"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1QF-5L-539" id="u5i-n4-tOd">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="75"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ul3-Rt-xgQ" customClass="RatingControl" customModule="Places" customModuleProvider="target">
+                                                    <rect key="frame" x="116" y="22.5" width="182" height="30"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="starCount">
+                                                            <integer key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </stackView>
+                                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="170" placeholderIntrinsicHeight="30" translatesAutoresizingMaskIntoConstraints="NO" id="rmd-zT-Z52" customClass="CosmosView" customModule="Cosmos">
+                                                    <rect key="frame" x="122" y="22.5" width="170" height="30"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="starSize">
+                                                            <real key="value" value="30"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="emptyBorderWidth">
+                                                            <real key="value" value="2"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="filledBorderWidth">
+                                                            <real key="value" value="0.0"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="emptyBorderColor">
+                                                            <color key="value" red="0.62771946190000005" green="0.8501312137" blue="0.93828701969999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="filledColor">
+                                                            <color key="value" red="0.62771946190000005" green="0.8501312137" blue="0.93828701969999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="rmd-zT-Z52" firstAttribute="centerX" secondItem="u5i-n4-tOd" secondAttribute="centerX" id="5GY-b8-cVj"/>
+                                                <constraint firstItem="rmd-zT-Z52" firstAttribute="centerY" secondItem="u5i-n4-tOd" secondAttribute="centerY" id="9Nc-iV-4Bj"/>
+                                                <constraint firstItem="ul3-Rt-xgQ" firstAttribute="centerY" secondItem="u5i-n4-tOd" secondAttribute="centerY" id="GXk-ia-7FK"/>
+                                                <constraint firstItem="ul3-Rt-xgQ" firstAttribute="centerX" secondItem="u5i-n4-tOd" secondAttribute="centerX" id="KW2-md-zZk"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="subviews">
+                                                    <exclude reference="ul3-Rt-xgQ"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -301,17 +379,19 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="cosmosView" destination="rmd-zT-Z52" id="zZy-cG-5lf"/>
                         <outlet property="placeImage" destination="yMl-ca-40G" id="rR4-Vi-3Dh"/>
                         <outlet property="placeLocation" destination="8D7-Go-cdy" id="wgH-Kc-dPj"/>
                         <outlet property="placeName" destination="sTy-yC-qCn" id="2pB-eV-ZiH"/>
                         <outlet property="placeType" destination="tTg-Zg-gDK" id="s15-Ah-YD4"/>
+                        <outlet property="ratingControl" destination="ul3-Rt-xgQ" id="Nga-FK-Rng"/>
                         <outlet property="saveButton" destination="rIm-gG-ewf" id="at0-Uu-qWu"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iH4-5V-pPO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="5EJ-NT-g7a" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2041" y="119"/>
+            <point key="canvasLocation" x="2040.5797101449277" y="118.52678571428571"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="LTp-SE-GAa">
@@ -321,10 +401,15 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5za-h3-1g7">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.62771946190000005" green="0.8501312137" blue="0.93828701969999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" red="0.58835955902395931" green="0.827877176282792" blue="0.92161188471502586" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="Gilroy-ExtraBold" family="Gilroy" pointSize="21"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <fontDescription key="fontDescription" name="Gilroy-ExtraBold" family="Gilroy" pointSize="40"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                     </navigationBar>
@@ -365,6 +450,8 @@
     <resources>
         <image name="AZ" width="25" height="24"/>
         <image name="addImage" width="250" height="250"/>
+        <image name="clock" catalog="system" width="64" height="60"/>
+        <image name="textformat.alt" catalog="system" width="64" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="POi-lA-OKL"/>

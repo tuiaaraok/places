@@ -7,27 +7,38 @@
 //
 
 import UIKit
+import Cosmos
 
 class NewPlaceViewController: UITableViewController {
     
-    var currentPlace: Place?
+    var currentPlace: Place!
     var imageIsChanged = false
+    var currentRating = 0.0
 
     @IBOutlet var placeImage: UIImageView!
     @IBOutlet var saveButton: UIBarButtonItem!
     @IBOutlet var placeName: UITextField!
     @IBOutlet var placeLocation: UITextField!
     @IBOutlet var placeType: UITextField!
+    @IBOutlet var ratingControl: RatingControl!
     
-    
+    @IBOutlet var cosmosView: CosmosView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.tableFooterView = UIView()
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0,
+                                                         y: 0,
+                                                         width: tableView.frame.size.width,
+                                                         height: 1))
         saveButton.isEnabled = false // кнопка неактивна
         placeName.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged) // следит а тем, заполнено ли текстовое поле или нет. в заисимости от этого блок кнопки
         setupEditScreen()
+        
+        cosmosView.settings.fillMode = .full
+        cosmosView.didTouchCosmos = { rating in
+            self.currentRating = rating
+        }
     }
     
     // MARK: - Table view delegate
@@ -78,6 +89,7 @@ class NewPlaceViewController: UITableViewController {
             placeName.text = currentPlace?.name
             placeLocation.text = currentPlace?.location
             placeType.text = currentPlace?.type
+            cosmosView.rating = currentPlace.rating//Int(currentPlace.rating)
         }
     }
     
@@ -139,13 +151,15 @@ extension NewPlaceViewController: UITextFieldDelegate {
         let newPlace = Place(name: placeName.text!,
                              location: placeLocation.text,
                              type: placeType.text,
-                             imageData: imageData)
+                             imageData: imageData,
+                             rating: currentRating)//Double(ratingControl.rating))
         if currentPlace != nil {
             try! realm.write {
                 currentPlace?.name = newPlace.name
                 currentPlace?.type = newPlace.type
                 currentPlace?.location = newPlace.location
                 currentPlace?.imageData = newPlace.imageData
+                currentPlace?.rating = newPlace.rating
             }
         } else {
              StorageManager.saveObct(newPlace)
