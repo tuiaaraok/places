@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6301A5C624CA013C009AEC72 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6301A5C524CA013C009AEC72 /* RatingControl.swift */; };
+		6301A5C824CB1EFF009AEC72 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6301A5C724CB1EFF009AEC72 /* MapViewController.swift */; };
 		63C01F6324C828B00053A104 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C01F6224C828B00053A104 /* AppDelegate.swift */; };
 		63C01F6524C828B00053A104 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C01F6424C828B00053A104 /* SceneDelegate.swift */; };
 		63C01F6724C828B00053A104 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C01F6624C828B00053A104 /* MainViewController.swift */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		6301A5C524CA013C009AEC72 /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
+		6301A5C724CB1EFF009AEC72 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		63C01F5F24C828B00053A104 /* Places.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Places.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63C01F6224C828B00053A104 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63C01F6424C828B00053A104 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				63C01F7F24C837F60053A104 /* CustomTableViewCell.swift */,
 				6301A5C524CA013C009AEC72 /* RatingControl.swift */,
 				63C01F8D24C84B140053A104 /* NewPlaceViewController.swift */,
+				6301A5C724CB1EFF009AEC72 /* MapViewController.swift */,
 				63C01F8124C83B760053A104 /* PlaceModel.swift */,
 				63C01F8F24C87C860053A104 /* StorageManager.swift */,
 				63C01F6824C828B00053A104 /* Main.storyboard */,
@@ -261,6 +264,7 @@
 				63C01F8E24C84B140053A104 /* NewPlaceViewController.swift in Sources */,
 				63C01F6324C828B00053A104 /* AppDelegate.swift in Sources */,
 				63C01F9024C87C860053A104 /* StorageManager.swift in Sources */,
+				6301A5C824CB1EFF009AEC72 /* MapViewController.swift in Sources */,
 				6301A5C624CA013C009AEC72 /* RatingControl.swift in Sources */,
 				63C01F8224C83B760053A104 /* PlaceModel.swift in Sources */,
 				63C01F8024C837F60053A104 /* CustomTableViewCell.swift in Sources */,

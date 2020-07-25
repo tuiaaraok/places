@@ -21,8 +21,9 @@ class NewPlaceViewController: UITableViewController {
     @IBOutlet var placeLocation: UITextField!
     @IBOutlet var placeType: UITextField!
     @IBOutlet var ratingControl: RatingControl!
-    
     @IBOutlet var cosmosView: CosmosView!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +39,15 @@ class NewPlaceViewController: UITableViewController {
         cosmosView.settings.fillMode = .full
         cosmosView.didTouchCosmos = { rating in
             self.currentRating = rating
+            
+            
         }
+        
+        // navigation item font settings
+        
+        navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .disabled)
     }
     
     // MARK: - Table view delegate
@@ -133,18 +142,23 @@ extension NewPlaceViewController: UITextFieldDelegate {
     }
     
     
+    //MARK: - Navigation
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier != "showMap" { return }
+        
+        let mapVC = segue.destination as! MapViewController
+        mapVC.place.name = placeName.text!
+        mapVC.place.location = placeLocation.text
+        mapVC.place.type = placeType.text
+        mapVC.place.imageData = placeImage.image?.pngData()
+    }
     
     
     func savePlace() {
         
         
-        var image: UIImage?
-        if imageIsChanged {
-            image = placeImage.image
-        } else {
-            image = #imageLiteral(resourceName: "Шар")
-        }
+        let image = imageIsChanged ? placeImage.image : #imageLiteral(resourceName: "Шар")
         
         let imageData = image?.pngData()
         
@@ -153,6 +167,7 @@ extension NewPlaceViewController: UITextFieldDelegate {
                              type: placeType.text,
                              imageData: imageData,
                              rating: currentRating)//Double(ratingControl.rating))
+        
         if currentPlace != nil {
             try! realm.write {
                 currentPlace?.name = newPlace.name

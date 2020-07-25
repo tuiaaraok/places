@@ -40,7 +40,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false // позволит взаимодействоавть с измененным вью контроллером как с основным
         searchController.searchBar.placeholder = "Поиск"
-        
+      
         let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(red: 0.588359559, green: 0.8278771763, blue: 0.9216118847, alpha: 1)]
         let titleTextAttributes2 = [NSAttributedString.Key.foregroundColor: UIColor.white]
         segmentedControl.setTitleTextAttributes(titleTextAttributes2, for: .normal)

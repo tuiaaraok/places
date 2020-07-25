@@ -24,7 +24,9 @@
                                 <rect key="frame" x="112" y="541" width="190" height="51"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="51" id="03A-7Q-Dm0"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="51" id="JZZ-Uw-4gq"/>
                                     <constraint firstAttribute="width" constant="190" id="Q7u-lH-03N"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="190" id="UqX-T8-b0Z"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Gilroy-ExtraBold" family="Gilroy" pointSize="40"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
