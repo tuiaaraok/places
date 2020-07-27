@@ -85,16 +85,18 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.deselectRow(at: indexPath, animated: true) // отменяем выделение ячейки
     }
     
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
         let place = places[indexPath.row]
-        let deleteAction = UITableViewRowAction(style: .default, title: "Удалить") { (_, _) in
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
             StorageManager.deleteObject(place)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
-        
-        return [deleteAction]
-    }
+        let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])
 
+        return swipeActions
+    }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
