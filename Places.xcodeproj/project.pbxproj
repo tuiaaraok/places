@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6301A5C624CA013C009AEC72 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6301A5C524CA013C009AEC72 /* RatingControl.swift */; };
 		6301A5C824CB1EFF009AEC72 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6301A5C724CB1EFF009AEC72 /* MapViewController.swift */; };
+		6301A5CA24D07158009AEC72 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6301A5C924D07158009AEC72 /* MapManager.swift */; };
 		63C01F6324C828B00053A104 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C01F6224C828B00053A104 /* AppDelegate.swift */; };
 		63C01F6524C828B00053A104 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C01F6424C828B00053A104 /* SceneDelegate.swift */; };
 		63C01F6724C828B00053A104 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C01F6624C828B00053A104 /* MainViewController.swift */; };
@@ -32,6 +33,7 @@
 /* Begin PBXFileReference section */
 		6301A5C524CA013C009AEC72 /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		6301A5C724CB1EFF009AEC72 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		6301A5C924D07158009AEC72 /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		63C01F5F24C828B00053A104 /* Places.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Places.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63C01F6224C828B00053A104 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63C01F6424C828B00053A104 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +70,55 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6301A5CB24D0A021009AEC72 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				63C01F6624C828B00053A104 /* MainViewController.swift */,
+				63C01F8D24C84B140053A104 /* NewPlaceViewController.swift */,
+				6301A5C724CB1EFF009AEC72 /* MapViewController.swift */,
+				63C01F7F24C837F60053A104 /* CustomTableViewCell.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		6301A5CC24D0A041009AEC72 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				63C01F8124C83B760053A104 /* PlaceModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6301A5CD24D0A056009AEC72 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				6301A5C524CA013C009AEC72 /* RatingControl.swift */,
+				63C01F8F24C87C860053A104 /* StorageManager.swift */,
+				6301A5C924D07158009AEC72 /* MapManager.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		6301A5CE24D0A067009AEC72 /* Support files */ = {
+			isa = PBXGroup;
+			children = (
+				63C01F6224C828B00053A104 /* AppDelegate.swift */,
+				63C01F6424C828B00053A104 /* SceneDelegate.swift */,
+				63C01F7024C828B10053A104 /* Info.plist */,
+				63C01F6B24C828B10053A104 /* Assets.xcassets */,
+			);
+			path = "Support files";
+			sourceTree = "<group>";
+		};
+		6301A5CF24D0A084009AEC72 /* IBuilder */ = {
+			isa = PBXGroup;
+			children = (
+				63C01F6D24C828B10053A104 /* LaunchScreen.storyboard */,
+				63C01F6824C828B00053A104 /* Main.storyboard */,
+			);
+			path = IBuilder;
+			sourceTree = "<group>";
+		};
 		63C01F5624C828B00053A104 = {
 			isa = PBXGroup;
 			children = (
@@ -90,19 +141,11 @@
 		63C01F6124C828B00053A104 /* Places */ = {
 			isa = PBXGroup;
 			children = (
-				63C01F6224C828B00053A104 /* AppDelegate.swift */,
-				63C01F6424C828B00053A104 /* SceneDelegate.swift */,
-				63C01F6624C828B00053A104 /* MainViewController.swift */,
-				63C01F7F24C837F60053A104 /* CustomTableViewCell.swift */,
-				6301A5C524CA013C009AEC72 /* RatingControl.swift */,
-				63C01F8D24C84B140053A104 /* NewPlaceViewController.swift */,
-				6301A5C724CB1EFF009AEC72 /* MapViewController.swift */,
-				63C01F8124C83B760053A104 /* PlaceModel.swift */,
-				63C01F8F24C87C860053A104 /* StorageManager.swift */,
-				63C01F6824C828B00053A104 /* Main.storyboard */,
-				63C01F6B24C828B10053A104 /* Assets.xcassets */,
-				63C01F6D24C828B10053A104 /* LaunchScreen.storyboard */,
-				63C01F7024C828B10053A104 /* Info.plist */,
+				6301A5CB24D0A021009AEC72 /* View Controllers */,
+				6301A5CD24D0A056009AEC72 /* Helpers */,
+				6301A5CC24D0A041009AEC72 /* Models */,
+				6301A5CE24D0A067009AEC72 /* Support files */,
+				6301A5CF24D0A084009AEC72 /* IBuilder */,
 			);
 			path = Places;
 			sourceTree = "<group>";
@@ -266,6 +309,7 @@
 				63C01F9024C87C860053A104 /* StorageManager.swift in Sources */,
 				6301A5C824CB1EFF009AEC72 /* MapViewController.swift in Sources */,
 				6301A5C624CA013C009AEC72 /* RatingControl.swift in Sources */,
+				6301A5CA24D07158009AEC72 /* MapManager.swift in Sources */,
 				63C01F8224C83B760053A104 /* PlaceModel.swift in Sources */,
 				63C01F8024C837F60053A104 /* CustomTableViewCell.swift in Sources */,
 				63C01F6524C828B00053A104 /* SceneDelegate.swift in Sources */,
@@ -414,7 +458,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Places/Info.plist;
+				DEVELOPMENT_TEAM = 4825WAP7SS;
+				INFOPLIST_FILE = "Places/Support files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -432,7 +477,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Places/Info.plist;
+				DEVELOPMENT_TEAM = 4825WAP7SS;
+				INFOPLIST_FILE = "Places/Support files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

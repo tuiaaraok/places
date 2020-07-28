@@ -28,7 +28,7 @@
                                     <constraint firstAttribute="width" constant="190" id="Q7u-lH-03N"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="190" id="UqX-T8-b0Z"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Gilroy-ExtraBold" family="Gilroy" pointSize="40"/>
+                                <fontDescription key="fontDescription" name="Gilroy-ExtraBold" family="Gilroy" pointSize="37"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>

@@ -64,7 +64,6 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
 
-       
         let place = isFiltering ? filteredPlaces[indexPath.row] : places[indexPath.row]
       
         cell.nameLabel?.text = place.name
@@ -72,8 +71,6 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         cell.typeLabel.text = place.type
         cell.mainImage.image = UIImage(data: place.imageData!)
         cell.cosmosView.rating = place.rating
-
-        
 
         return cell
      }
@@ -134,7 +131,6 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         }
         
         sorting()
-        
     }
     
     private func sorting() {
@@ -148,7 +144,6 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.reloadData()
     }
 }
-
 
 extension MainViewController: UISearchResultsUpdating {
     
