@@ -56,9 +56,6 @@ class NewPlaceViewController: UITableViewController {
         
         if indexPath.row == 0 {
             
-//            let cameraIcon = #imageLiteral(resourceName: "camera")
-//            let photoIcon = #imageLiteral(resourceName: "photo")
-            
             let actionSheet = UIAlertController(
                 title: nil,
                 message: nil,
