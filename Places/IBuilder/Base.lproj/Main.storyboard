@@ -174,7 +174,7 @@
             <objects>
                 <tableViewController id="lnG-dN-7YI" customClass="NewPlaceViewController" customModule="Places" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="hHe-1f-Bw9">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <inset key="separatorInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
@@ -214,25 +214,25 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="75" id="RBh-cb-O7S">
-                                        <rect key="frame" x="0.0" y="442" width="414" height="75"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="60" id="RBh-cb-O7S">
+                                        <rect key="frame" x="0.0" y="442" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RBh-cb-O7S" id="Mhh-4H-be4">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="75"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="oZm-4V-2Ku">
-                                                    <rect key="frame" x="16" y="8" width="382" height="63"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="oZm-4V-2Ku">
+                                                    <rect key="frame" x="16" y="8" width="382" height="48"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Название" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JrT-py-Sc0">
-                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="24"/>
-                                                            <fontDescription key="fontDescription" name="Gilroy-Regular" family="Gilroy" pointSize="17"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="18.5"/>
+                                                            <fontDescription key="fontDescription" name="Gilroy-Regular" family="Gilroy" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Название места" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sTy-yC-qCn">
-                                                            <rect key="frame" x="0.0" y="32" width="382" height="31"/>
-                                                            <fontDescription key="fontDescription" name="Gilroy-Medium" family="Gilroy" pointSize="20"/>
+                                                            <rect key="frame" x="0.0" y="24.5" width="382" height="23.5"/>
+                                                            <fontDescription key="fontDescription" name="Gilroy-Medium" family="Gilroy" pointSize="18"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                                             <connections>
                                                                 <outlet property="delegate" destination="lnG-dN-7YI" id="AcB-gP-sef"/>
@@ -249,24 +249,24 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="75" id="nbA-lL-XhZ">
-                                        <rect key="frame" x="0.0" y="517" width="414" height="75"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="60" id="nbA-lL-XhZ">
+                                        <rect key="frame" x="0.0" y="502" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nbA-lL-XhZ" id="ntd-iN-tTi">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="75"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tQx-qO-eZf">
-                                                    <rect key="frame" x="16" y="8" width="343" height="63"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="tQx-qO-eZf">
+                                                    <rect key="frame" x="16" y="8" width="343" height="48"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Местоположение" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X7D-hN-GlX">
-                                                            <rect key="frame" x="0.0" y="0.0" width="343" height="24"/>
-                                                            <fontDescription key="fontDescription" name="Gilroy-Regular" family="Gilroy" pointSize="17"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="343" height="17.5"/>
+                                                            <fontDescription key="fontDescription" name="Gilroy-Regular" family="Gilroy" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Местоположение" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8D7-Go-cdy">
-                                                            <rect key="frame" x="0.0" y="32" width="343" height="31"/>
+                                                            <rect key="frame" x="0.0" y="23.5" width="343" height="24.5"/>
                                                             <fontDescription key="fontDescription" name="Gilroy-Medium" family="Gilroy" pointSize="20"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                                             <connections>
@@ -276,7 +276,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rmg-lL-H79">
-                                                    <rect key="frame" x="369" y="40.5" width="30" height="30"/>
+                                                    <rect key="frame" x="369" y="29" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="Jfq-dt-ajh"/>
                                                         <constraint firstAttribute="height" constant="30" id="K08-N7-k51"/>
@@ -297,24 +297,24 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="75" id="YnE-Gd-QOp">
-                                        <rect key="frame" x="0.0" y="592" width="414" height="75"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="60" id="YnE-Gd-QOp">
+                                        <rect key="frame" x="0.0" y="562" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YnE-Gd-QOp" id="f4c-W9-0ui">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="75"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="UZD-Ra-Q1X">
-                                                    <rect key="frame" x="16" y="8" width="382" height="63"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="UZD-Ra-Q1X">
+                                                    <rect key="frame" x="16" y="8" width="382" height="48"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Тип места" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="blq-cL-sRc">
-                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="24"/>
-                                                            <fontDescription key="fontDescription" name="Gilroy-Regular" family="Gilroy" pointSize="17"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="17.5"/>
+                                                            <fontDescription key="fontDescription" name="Gilroy-Regular" family="Gilroy" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Укажите тип места" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tTg-Zg-gDK">
-                                                            <rect key="frame" x="0.0" y="32" width="382" height="31"/>
+                                                            <rect key="frame" x="0.0" y="23.5" width="382" height="24.5"/>
                                                             <fontDescription key="fontDescription" name="Gilroy-Medium" family="Gilroy" pointSize="20"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                                             <connections>
@@ -332,13 +332,23 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="75" id="1QF-5L-539">
-                                        <rect key="frame" x="0.0" y="667" width="414" height="75"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="80" id="1QF-5L-539">
+                                        <rect key="frame" x="0.0" y="622" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1QF-5L-539" id="u5i-n4-tOd">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="75"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Добавьте описание" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="4aA-3w-sZo">
+                                                    <rect key="frame" x="16" y="30" width="382" height="48"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="48" id="Fcn-On-NWn"/>
+                                                    </constraints>
+                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="Gilroy-Regular" family="Gilroy" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                                </textView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ul3-Rt-xgQ" customClass="RatingControl" customModule="Places" customModuleProvider="target">
                                                     <rect key="frame" x="116" y="22.5" width="182" height="30"/>
                                                     <userDefinedRuntimeAttributes>
@@ -347,8 +357,50 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </stackView>
-                                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="170" placeholderIntrinsicHeight="30" translatesAutoresizingMaskIntoConstraints="NO" id="rmd-zT-Z52" customClass="CosmosView" customModule="Cosmos">
-                                                    <rect key="frame" x="122" y="22.5" width="170" height="30"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Описание" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MLU-HW-DHE">
+                                                    <rect key="frame" x="16" y="8" width="382" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="24" id="bhB-SX-zzo"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Gilroy-Regular" family="Gilroy" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="MLU-HW-DHE" firstAttribute="leading" secondItem="u5i-n4-tOd" secondAttribute="leading" constant="16" id="3EM-0h-yYe"/>
+                                                <constraint firstItem="4aA-3w-sZo" firstAttribute="top" secondItem="u5i-n4-tOd" secondAttribute="top" constant="30" id="582-Tu-D0i"/>
+                                                <constraint firstItem="ul3-Rt-xgQ" firstAttribute="centerY" secondItem="u5i-n4-tOd" secondAttribute="centerY" id="GXk-ia-7FK"/>
+                                                <constraint firstItem="ul3-Rt-xgQ" firstAttribute="centerX" secondItem="u5i-n4-tOd" secondAttribute="centerX" id="KW2-md-zZk"/>
+                                                <constraint firstAttribute="trailing" secondItem="MLU-HW-DHE" secondAttribute="trailing" constant="16" id="Lqy-79-9Bk"/>
+                                                <constraint firstItem="4aA-3w-sZo" firstAttribute="leading" secondItem="u5i-n4-tOd" secondAttribute="leading" constant="16" id="Zv2-js-QUu"/>
+                                                <constraint firstItem="MLU-HW-DHE" firstAttribute="top" secondItem="u5i-n4-tOd" secondAttribute="top" constant="8" id="e7N-3T-26g"/>
+                                                <constraint firstAttribute="trailing" secondItem="4aA-3w-sZo" secondAttribute="trailing" constant="16" id="gbL-4F-hiW"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="subviews">
+                                                    <exclude reference="ul3-Rt-xgQ"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="70" id="vFw-Bc-Gyq">
+                                        <rect key="frame" x="0.0" y="702" width="414" height="70"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vFw-Bc-Gyq" id="ffh-dX-RFD">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="S6Y-XV-l4I" customClass="RatingControl" customModule="Places" customModuleProvider="target">
+                                                    <rect key="frame" x="116" y="22.5" width="182" height="30"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="starCount">
+                                                            <integer key="value" value="5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </stackView>
+                                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="170" placeholderIntrinsicHeight="30" translatesAutoresizingMaskIntoConstraints="NO" id="Qj3-4S-vUs" customClass="CosmosView" customModule="Cosmos">
+                                                    <rect key="frame" x="122" y="20" width="170" height="30"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="starSize">
@@ -366,18 +418,21 @@
                                                         <userDefinedRuntimeAttribute type="color" keyPath="filledColor">
                                                             <color key="value" red="0.62771946190000005" green="0.8501312137" blue="0.93828701969999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="rating">
+                                                            <real key="value" value="0.0"/>
+                                                        </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="rmd-zT-Z52" firstAttribute="centerX" secondItem="u5i-n4-tOd" secondAttribute="centerX" id="5GY-b8-cVj"/>
-                                                <constraint firstItem="rmd-zT-Z52" firstAttribute="centerY" secondItem="u5i-n4-tOd" secondAttribute="centerY" id="9Nc-iV-4Bj"/>
-                                                <constraint firstItem="ul3-Rt-xgQ" firstAttribute="centerY" secondItem="u5i-n4-tOd" secondAttribute="centerY" id="GXk-ia-7FK"/>
-                                                <constraint firstItem="ul3-Rt-xgQ" firstAttribute="centerX" secondItem="u5i-n4-tOd" secondAttribute="centerX" id="KW2-md-zZk"/>
+                                                <constraint firstItem="S6Y-XV-l4I" firstAttribute="centerY" secondItem="ffh-dX-RFD" secondAttribute="centerY" id="IxF-dN-ZfU"/>
+                                                <constraint firstItem="S6Y-XV-l4I" firstAttribute="centerX" secondItem="ffh-dX-RFD" secondAttribute="centerX" id="W2o-uK-QK3"/>
+                                                <constraint firstItem="Qj3-4S-vUs" firstAttribute="centerY" secondItem="ffh-dX-RFD" secondAttribute="centerY" id="vI5-Uo-QeF"/>
+                                                <constraint firstItem="Qj3-4S-vUs" firstAttribute="centerX" secondItem="ffh-dX-RFD" secondAttribute="centerX" id="yrg-s6-9lZ"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="subviews">
-                                                    <exclude reference="ul3-Rt-xgQ"/>
+                                                    <exclude reference="S6Y-XV-l4I"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -404,8 +459,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <size key="freeformSize" width="414" height="1000"/>
                     <connections>
-                        <outlet property="cosmosView" destination="rmd-zT-Z52" id="zZy-cG-5lf"/>
+                        <outlet property="cosmosView" destination="Qj3-4S-vUs" id="IdF-hZ-C2M"/>
+                        <outlet property="placeDescription" destination="4aA-3w-sZo" id="91G-Vn-9MX"/>
                         <outlet property="placeImage" destination="yMl-ca-40G" id="rR4-Vi-3Dh"/>
                         <outlet property="placeLocation" destination="8D7-Go-cdy" id="wgH-Kc-dPj"/>
                         <outlet property="placeName" destination="sTy-yC-qCn" id="2pB-eV-ZiH"/>

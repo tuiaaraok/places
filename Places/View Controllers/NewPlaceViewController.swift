@@ -14,6 +14,7 @@ class NewPlaceViewController: UITableViewController {
     var currentPlace: Place!
     var imageIsChanged = false
     var currentRating = 0.0
+    var textViewPlaceholderText: String = "Добавьте описание"
 
     @IBOutlet var placeImage: UIImageView!
     @IBOutlet var saveButton: UIBarButtonItem!
@@ -22,11 +23,12 @@ class NewPlaceViewController: UITableViewController {
     @IBOutlet var placeType: UITextField!
     @IBOutlet var ratingControl: RatingControl!
     @IBOutlet var cosmosView: CosmosView!
-    
-    
+    @IBOutlet var placeDescription: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupTextView()
         
         tableView.tableFooterView = UIView(frame: CGRect(x: 0,
                                                          y: 0,
@@ -39,8 +41,6 @@ class NewPlaceViewController: UITableViewController {
         cosmosView.settings.fillMode = .full
         cosmosView.didTouchCosmos = { rating in
             self.currentRating = rating
-            
-            
         }
         
         // navigation item font settings
@@ -59,7 +59,6 @@ class NewPlaceViewController: UITableViewController {
 //            let cameraIcon = #imageLiteral(resourceName: "camera")
 //            let photoIcon = #imageLiteral(resourceName: "photo")
             
-            
             let actionSheet = UIAlertController(
                 title: nil,
                 message: nil,
@@ -69,7 +68,6 @@ class NewPlaceViewController: UITableViewController {
                 self.chooseImagePicker(source: .camera)
             }
         //    camera.setValue(cameraIcon, forKey: "image")
-           
             
             let photo = UIAlertAction(title: "Галерея", style: .default) { (_) in
                 self.chooseImagePicker(source: .photoLibrary)
@@ -88,6 +86,54 @@ class NewPlaceViewController: UITableViewController {
         }
     }
     
+    //MARK: - Navigation
+       
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+           
+        guard
+            let identifier = segue.identifier,
+            let mapVC = segue.destination as? MapViewController
+            else { return }
+           
+        mapVC.incomeSegueIdentifier = identifier
+        mapVC.mapViewControllerDelegate = self
+           
+        if identifier == "showPlace" {
+            mapVC.place.name = placeName.text!
+            mapVC.place.location = placeLocation.text
+            mapVC.place.type = placeType.text
+            mapVC.place.imageData = placeImage.image?.pngData()
+            mapVC.place.placeDescription = placeDescription.text
+        }
+    }
+
+       func savePlace() {
+           
+           let image = imageIsChanged ? placeImage.image : #imageLiteral(resourceName: "Шар")
+           
+           let imageData = image?.pngData()
+           
+           let newPlace = Place(name: placeName.text!,
+                                location: placeLocation.text,
+                                type: placeType.text,
+                                imageData: imageData,
+                                rating: currentRating,
+                                placeDescription: placeDescription.text)//Double(ratingControl.rating))
+           
+           if currentPlace != nil {
+               try! realm.write {
+                   currentPlace?.name = newPlace.name
+                   currentPlace?.type = newPlace.type
+                   currentPlace?.location = newPlace.location
+                   currentPlace?.imageData = newPlace.imageData
+                   currentPlace?.rating = newPlace.rating
+                   currentPlace?.placeDescription = newPlace.placeDescription
+               }
+           } else {
+                StorageManager.saveObct(newPlace)
+           }
+       }
+    
     private func setupEditScreen() {
         if currentPlace != nil {
             setupNavigationBar()
@@ -99,13 +145,14 @@ class NewPlaceViewController: UITableViewController {
             placeLocation.text = currentPlace?.location
             placeType.text = currentPlace?.type
             cosmosView.rating = currentPlace.rating//Int(currentPlace.rating)
+            placeDescription.text = currentPlace?.placeDescription
+            placeDescription.textColor = .black
         }
     }
     
     private func setupNavigationBar() {
         if let topItem = navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-            
         }
         navigationItem.leftBarButtonItem = nil
         title = currentPlace?.name
@@ -134,57 +181,35 @@ extension NewPlaceViewController: UITextFieldDelegate {
             saveButton.isEnabled = false
         }
     }
-    
-    //MARK: - Navigation
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard
-            let identifier = segue.identifier,
-            let mapVC = segue.destination as? MapViewController
-            else { return }
-        
-        mapVC.incomeSegueIdentifier = identifier
-        mapVC.mapViewControllerDelegate = self
-        
-        if identifier == "showPlace" {
-            mapVC.place.name = placeName.text!
-            mapVC.place.location = placeLocation.text
-            mapVC.place.type = placeType.text
-            mapVC.place.imageData = placeImage.image?.pngData()
-        }
-    }
-    
-    
-    func savePlace() {
-        
-        
-        let image = imageIsChanged ? placeImage.image : #imageLiteral(resourceName: "Шар")
-        
-        let imageData = image?.pngData()
-        
-        let newPlace = Place(name: placeName.text!,
-                             location: placeLocation.text,
-                             type: placeType.text,
-                             imageData: imageData,
-                             rating: currentRating)//Double(ratingControl.rating))
-        
-        if currentPlace != nil {
-            try! realm.write {
-                currentPlace?.name = newPlace.name
-                currentPlace?.type = newPlace.type
-                currentPlace?.location = newPlace.location
-                currentPlace?.imageData = newPlace.imageData
-                currentPlace?.rating = newPlace.rating
-            }
-        } else {
-             StorageManager.saveObct(newPlace)
-        }
-       
-        
-    }
 }
 
+extension NewPlaceViewController: UITextViewDelegate {
+   func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+          if text == "\n" {
+              textView.resignFirstResponder()
+              return false
+          }
+          return true
+   }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == textViewPlaceholderText {
+            textView.text = ""
+            textView.textColor = .black
+        } else if !textView.text.isEmpty {
+             textView.textColor = .black
+        }
+    }
+    
+    private func setupTextView() {
+        
+        placeDescription.delegate = self
+        placeDescription.text = textViewPlaceholderText
+        placeDescription.textColor = .lightGray
+        placeDescription.font = UIFont(name: "Gilroy-Medium", size: 17)
+        placeDescription.returnKeyType = .done
+    }
+}
 
 // MARK: - Work with image
 
@@ -198,7 +223,6 @@ extension NewPlaceViewController: UIImagePickerControllerDelegate, UINavigationC
             imagePicker.allowsEditing = true // позволит редактировать выбранное изобр, например масшаб
             imagePicker.sourceType = source //source  тип источника для выбранного изобр
             present(imagePicker, animated: true)
-            
         }
     }
     

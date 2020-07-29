@@ -30,7 +30,6 @@ import UIKit
             setupButtons()
         }
     }
-    
 
     //MARK: - Initialization
     
@@ -88,7 +87,6 @@ import UIKit
             
             let button = UIButton()
         
-            
             // Set the button images
             button.setImage(emptyStar, for: .normal)
             button.setImage(filledStar, for: .selected)
@@ -115,5 +113,4 @@ import UIKit
             button.isSelected = index < rating
         }
     }
-
 }
