@@ -8,13 +8,19 @@
 
 import UIKit
 import Cosmos
+import RealmSwift
 
 class NewPlaceViewController: UITableViewController {
     
     var currentPlace: Place!
     var imageIsChanged = false
     var currentRating = 0.0
+    var pickerView = UIPickerView()
     var textViewPlaceholderText: String = "Добавьте описание"
+
+    
+  //  private var types: Results<Type>!
+    var types = ["Ресторан", "Кафе", "Приключения", "Путешествия", "Событие", "Добавить тип"]
 
     @IBOutlet var placeImage: UIImageView!
     @IBOutlet var saveButton: UIBarButtonItem!
@@ -27,6 +33,11 @@ class NewPlaceViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        pickerView.delegate = self
+        pickerView.dataSource = self
+       
+        placeType.inputView = pickerView
         
         setupTextView()
         
@@ -43,11 +54,8 @@ class NewPlaceViewController: UITableViewController {
             self.currentRating = rating
         }
         
-        // navigation item font settings
-        
-        navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
-        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
-        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .disabled)
+        setupNavigationBarItem()
+        setupNavigationBar()
     }
     
     // MARK: - Table view delegate
@@ -64,12 +72,10 @@ class NewPlaceViewController: UITableViewController {
             let camera = UIAlertAction(title: "Камера", style: .default) { (_) in
                 self.chooseImagePicker(source: .camera)
             }
-        //    camera.setValue(cameraIcon, forKey: "image")
             
             let photo = UIAlertAction(title: "Галерея", style: .default) { (_) in
                 self.chooseImagePicker(source: .photoLibrary)
             }
-          //  photoIcon.setValue(photoIcon, forKey: "image")
             
             let cancel = UIAlertAction(title: "Отмена", style: .cancel)
             
@@ -104,32 +110,32 @@ class NewPlaceViewController: UITableViewController {
         }
     }
 
-       func savePlace() {
+    func savePlace() {
            
-           let image = imageIsChanged ? placeImage.image : #imageLiteral(resourceName: "Шар")
+        let image = imageIsChanged ? placeImage.image : #imageLiteral(resourceName: "Шар")
+        
+        let imageData = image?.pngData()
+        
+        let newPlace = Place(name: placeName.text!,
+                            location: placeLocation.text,
+                            type: placeType.text,
+                            imageData: imageData,
+                            rating: currentRating,
+                            placeDescription: placeDescription.text)//Double(ratingControl.rating))
            
-           let imageData = image?.pngData()
-           
-           let newPlace = Place(name: placeName.text!,
-                                location: placeLocation.text,
-                                type: placeType.text,
-                                imageData: imageData,
-                                rating: currentRating,
-                                placeDescription: placeDescription.text)//Double(ratingControl.rating))
-           
-           if currentPlace != nil {
-               try! realm.write {
-                   currentPlace?.name = newPlace.name
-                   currentPlace?.type = newPlace.type
-                   currentPlace?.location = newPlace.location
-                   currentPlace?.imageData = newPlace.imageData
-                   currentPlace?.rating = newPlace.rating
-                   currentPlace?.placeDescription = newPlace.placeDescription
-               }
-           } else {
-                StorageManager.saveObct(newPlace)
-           }
-       }
+        if currentPlace != nil {
+            try! realm.write {
+                currentPlace?.name = newPlace.name
+                currentPlace?.type = newPlace.type
+                currentPlace?.location = newPlace.location
+                currentPlace?.imageData = newPlace.imageData
+                currentPlace?.rating = newPlace.rating
+                currentPlace?.placeDescription = newPlace.placeDescription
+            }
+        } else {
+            StorageManager.saveObct(newPlace)
+        }
+    }
     
     private func setupEditScreen() {
         if currentPlace != nil {
@@ -149,7 +155,10 @@ class NewPlaceViewController: UITableViewController {
     
     private func setupNavigationBar() {
         if let topItem = navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+            topItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                        style: .plain,
+                                                        target: nil,
+                                                        action: nil)
         }
         navigationItem.leftBarButtonItem = nil
         title = currentPlace?.name
@@ -179,6 +188,8 @@ extension NewPlaceViewController: UITextFieldDelegate {
         }
     }
 }
+
+// MARK: - Text view delegate
 
 extension NewPlaceViewController: UITextViewDelegate {
    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -240,3 +251,40 @@ extension NewPlaceViewController: MapViewControllerDelegate {
         placeLocation.text = address
     }
 }
+
+extension NewPlaceViewController {
+       
+       private func setupNavigationBarItem() {
+        
+        navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .disabled)
+       }
+   }
+
+extension NewPlaceViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return types.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return types[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        placeType.text = types[row]
+       
+        if types[row] == "Добавить тип" || placeType.text == "Добавить тип" {
+            placeType.text = ""
+            placeType.placeholder = "Добавить тип"
+        
+        } else {
+         placeType.resignFirstResponder()
+        }
+    }
+}
+
