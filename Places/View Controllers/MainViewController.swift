@@ -96,6 +96,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "detail" {
             guard let indexPath = tableView.indexPathForSelectedRow else {return}

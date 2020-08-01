@@ -8,13 +8,19 @@
 
 import UIKit
 import Cosmos
+import RealmSwift
+import BonsaiController
 
 class NewPlaceViewController: UITableViewController {
     
     var currentPlace: Place!
+    var typesRealm: Results<Type>!
     var imageIsChanged = false
     var currentRating = 0.0
     var textViewPlaceholderText: String = "Добавьте описание"
+    var pickerView = UIPickerView()
+    var types = ["Ресторан", "Кафе", "Путешествия", "Приключение", "Событие"]
+    
 
     @IBOutlet var placeImage: UIImageView!
     @IBOutlet var saveButton: UIBarButtonItem!
@@ -27,6 +33,20 @@ class NewPlaceViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        typesRealm = realm.objects(Type.self)
+    
+ 
+//            for type in types {
+//                StorageManager.saveType(Type(type: type))
+//            }
+        
+        
+        print(typesRealm.count)
+        
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        placeType.inputView = pickerView
         
         setupTextView()
         
@@ -43,11 +63,7 @@ class NewPlaceViewController: UITableViewController {
             self.currentRating = rating
         }
         
-        // navigation item font settings
-        
-        navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
-        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
-        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .disabled)
+       setupNavigationBarItem()
     }
     
     // MARK: - Table view delegate
@@ -87,11 +103,8 @@ class NewPlaceViewController: UITableViewController {
        
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
            
-        guard
-            let identifier = segue.identifier,
-            let mapVC = segue.destination as? MapViewController
-            else { return }
-           
+      if let identifier = segue.identifier,
+        let mapVC = segue.destination as? MapViewController {
         mapVC.incomeSegueIdentifier = identifier
         mapVC.mapViewControllerDelegate = self
            
@@ -102,12 +115,24 @@ class NewPlaceViewController: UITableViewController {
             mapVC.place.imageData = placeImage.image?.pngData()
             mapVC.place.placeDescription = placeDescription.text
         }
+        
+        }
+           
+        if segue.destination is TypeEditSmallViewController {
+            segue.destination.transitioningDelegate = self
+            segue.destination.modalPresentationStyle = .custom
+        }
     }
 
+    @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {
+        
+        placeType.text = typesRealm.last?.type
+        pickerView.reloadAllComponents()
+    }
+    
        func savePlace() {
            
            let image = imageIsChanged ? placeImage.image : #imageLiteral(resourceName: "Шар")
-           
            let imageData = image?.pngData()
            
            let newPlace = Place(name: placeName.text!,
@@ -156,6 +181,21 @@ class NewPlaceViewController: UITableViewController {
         saveButton.isEnabled = true
     }
     
+    private func setupNavigationBarItem() {
+    
+    // navigation item font settings
+        navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .disabled)
+    }
+    
+    @IBAction func chooseType() {
+        
+        if placeType.placeholder == textViewPlaceholderText {
+            placeType.willRemoveSubview(pickerView)
+        }
+    }
+    
     @IBAction func cancelAction(_ sender: Any) {
         dismiss(animated: true)
     }
@@ -179,6 +219,8 @@ extension NewPlaceViewController: UITextFieldDelegate {
         }
     }
 }
+
+// MARK: - Text view delegate
 
 extension NewPlaceViewController: UITextViewDelegate {
    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -238,5 +280,58 @@ extension NewPlaceViewController: UIImagePickerControllerDelegate, UINavigationC
 extension NewPlaceViewController: MapViewControllerDelegate {
     func getaddress(_ address: String?) {
         placeLocation.text = address
+    }
+}
+
+// MARK: - UIPickerViewDelegate, UIPickerViewDataSource
+
+extension NewPlaceViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        typesRealm.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return typesRealm?[row].type
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        placeType.text = typesRealm[row].type
+        placeType.resignFirstResponder()
+    }
+}
+
+// MARK: - Bonsai Controller Delegate
+extension NewPlaceViewController: BonsaiControllerDelegate {
+    
+    // return the frame of your Bonsai View Controller
+    func frameOfPresentedView(in containerViewFrame: CGRect) -> CGRect {
+        
+        return CGRect(origin: CGPoint(x: 0, y: containerViewFrame.height / 2), size: CGSize(width: containerViewFrame.width, height: containerViewFrame.height / (2)))
+    }
+    
+    // return a Bonsai Controller with SlideIn or Bubble transition animator
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+    
+        /// With Background Color ///
+    
+        // Slide animation from .left, .right, .top, .bottom
+        return BonsaiController(fromDirection: .bottom, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
+        
+        // or Bubble animation initiated from a view
+        //return BonsaiController(fromView: yourOriginView, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
+    
+    
+        /// With Blur Style ///
+        
+        // Slide animation from .left, .right, .top, .bottom
+        //return BonsaiController(fromDirection: .bottom, blurEffectStyle: .light, presentedViewController: presented, delegate: self)
+        
+        // or Bubble animation initiated from a view
+        //return BonsaiController(fromView: yourOriginView, blurEffectStyle: .dark,  presentedViewController: presented, delegate: self)
     }
 }

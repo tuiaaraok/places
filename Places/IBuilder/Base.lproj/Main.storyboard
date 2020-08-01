@@ -7,6 +7,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Radomir Tinkov - Gilroy-ExtraBold.otf">
+            <string>Gilroy-ExtraBold</string>
+        </array>
         <array key="Radomir Tinkov - Gilroy-Light.otf">
             <string>Gilroy-Light</string>
         </array>
@@ -194,6 +197,7 @@
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6GK-AY-DsL">
                                                     <rect key="frame" x="344" y="353" width="50" height="50"/>
+                                                    <color key="backgroundColor" red="1" green="0.86942623259999996" blue="0.83032945020000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="QDK-Y9-bNo"/>
                                                         <constraint firstAttribute="height" constant="50" id="tc3-ve-h78"/>
@@ -308,19 +312,37 @@
                                                     <rect key="frame" x="16" y="8" width="382" height="48"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Тип места" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="blq-cL-sRc">
-                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="17.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="15.5"/>
                                                             <fontDescription key="fontDescription" name="Gilroy-Regular" family="Gilroy" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Укажите тип места" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tTg-Zg-gDK">
-                                                            <rect key="frame" x="0.0" y="23.5" width="382" height="24.5"/>
-                                                            <fontDescription key="fontDescription" name="Gilroy-Medium" family="Gilroy" pointSize="20"/>
-                                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
-                                                            <connections>
-                                                                <outlet property="delegate" destination="lnG-dN-7YI" id="JWv-aH-z7W"/>
-                                                            </connections>
-                                                        </textField>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="tBe-f8-mI4">
+                                                            <rect key="frame" x="0.0" y="21.5" width="382" height="26.5"/>
+                                                            <subviews>
+                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Укажите тип места" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tTg-Zg-gDK">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="346" height="26.5"/>
+                                                                    <fontDescription key="fontDescription" name="Gilroy-Medium" family="Gilroy" pointSize="20"/>
+                                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                                                    <connections>
+                                                                        <action selector="chooseType" destination="lnG-dN-7YI" eventType="editingDidEnd" id="qb6-Bs-GgR"/>
+                                                                        <outlet property="delegate" destination="lnG-dN-7YI" id="JWv-aH-z7W"/>
+                                                                    </connections>
+                                                                </textField>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T7p-Jv-W6G">
+                                                                    <rect key="frame" x="352" y="0.0" width="30" height="26.5"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="26.5" id="VfC-lU-caA"/>
+                                                                        <constraint firstAttribute="width" constant="30" id="Xof-2f-gtx"/>
+                                                                    </constraints>
+                                                                    <color key="tintColor" red="0.58835955900000003" green="0.82787717630000002" blue="0.92161188469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <state key="normal" image="pencil" catalog="system"/>
+                                                                    <connections>
+                                                                        <segue destination="Yg7-ad-nUh" kind="presentation" id="zEd-Gf-eaC"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                        </stackView>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
@@ -475,6 +497,127 @@
                 <exit id="5EJ-NT-g7a" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2040.5797101449277" y="118.52678571428571"/>
+        </scene>
+        <!--Type Edit Small View Controller-->
+        <scene sceneID="sMc-0M-dto">
+            <objects>
+                <viewController id="Yg7-ad-nUh" customClass="TypeEditSmallViewController" customModule="Places" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zUA-fm-dfC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="450"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Xwn-7e-m7r">
+                                <rect key="frame" x="16" y="376" width="382" height="34"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Напишите тип" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="F3Z-xz-ApT">
+                                        <rect key="frame" x="0.0" y="0.0" width="287" height="34"/>
+                                        <fontDescription key="fontDescription" name="Gilroy-Regular" family="Gilroy" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="Yg7-ad-nUh" id="96a-vg-4DT"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L27-fc-sHZ">
+                                        <rect key="frame" x="297" y="0.0" width="85" height="34"/>
+                                        <color key="backgroundColor" red="0.58835955900000003" green="0.82787717630000002" blue="0.92161188469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="85" id="CHg-2v-ppJ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Gilroy-Regular" family="Gilroy" pointSize="17"/>
+                                        <state key="normal" title="Добавить">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addButtonPressed" destination="Yg7-ad-nUh" eventType="touchUpInside" id="oCF-xH-BRo"/>
+                                            <segue destination="9cP-ow-AhM" kind="unwind" unwindAction="unwindSegue:" id="hij-Ar-bnv"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="2t5-Y1-kRf"/>
+                                </constraints>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kBi-Ls-tHE">
+                                <rect key="frame" x="0.0" y="44" width="414" height="55"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Типы" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HR8-kB-vWt">
+                                        <rect key="frame" x="24" y="13.5" width="58" height="29.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="58" id="M54-qW-rhH"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Gilroy-ExtraBold" family="Gilroy" pointSize="24"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.62771946190000005" green="0.8501312137" blue="0.93828701969999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="HR8-kB-vWt" firstAttribute="leading" secondItem="kBi-Ls-tHE" secondAttribute="leading" constant="24" id="j2Z-3Z-qSJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="HR8-kB-vWt" secondAttribute="bottom" constant="12" id="k03-Yl-6mz"/>
+                                    <constraint firstAttribute="height" constant="55" id="zT0-26-JqA"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YNg-Lw-Afh">
+                                <rect key="frame" x="0.0" y="99" width="414" height="269"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="typeCell" id="XbZ-Ja-L7P" customClass="TypeTableViewCell" customModule="Places" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XbZ-Ja-L7P" id="WAN-g4-VZs">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nSd-Wj-XcF">
+                                                    <rect key="frame" x="378" y="11" width="20" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22" id="M9y-yq-tyv"/>
+                                                        <constraint firstAttribute="width" constant="20" id="nCi-kV-KPk"/>
+                                                    </constraints>
+                                                    <color key="tintColor" red="0.62771946190000005" green="0.8501312137" blue="0.93828701969999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <state key="normal" image="trash.fill" catalog="system"/>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="nSd-Wj-XcF" secondAttribute="trailing" constant="16" id="6zK-ef-sZp"/>
+                                                <constraint firstItem="nSd-Wj-XcF" firstAttribute="centerY" secondItem="WAN-g4-VZs" secondAttribute="centerY" id="bGS-9b-Za5"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="deleteButton" destination="nSd-Wj-XcF" id="baB-0Z-no1"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Xwn-7e-m7r" firstAttribute="top" secondItem="YNg-Lw-Afh" secondAttribute="bottom" constant="8" id="3Wq-kG-vbj"/>
+                            <constraint firstItem="YNg-Lw-Afh" firstAttribute="trailing" secondItem="rVB-R8-Eq9" secondAttribute="trailing" id="4gW-Qt-roj"/>
+                            <constraint firstItem="kBi-Ls-tHE" firstAttribute="trailing" secondItem="rVB-R8-Eq9" secondAttribute="trailing" id="8kw-wg-DSA"/>
+                            <constraint firstItem="kBi-Ls-tHE" firstAttribute="leading" secondItem="rVB-R8-Eq9" secondAttribute="leading" id="BZc-PD-g3M"/>
+                            <constraint firstItem="rVB-R8-Eq9" firstAttribute="trailing" secondItem="Xwn-7e-m7r" secondAttribute="trailing" constant="16" id="KOo-d6-7Qe"/>
+                            <constraint firstItem="kBi-Ls-tHE" firstAttribute="top" secondItem="rVB-R8-Eq9" secondAttribute="top" id="MW5-wq-xbO"/>
+                            <constraint firstItem="YNg-Lw-Afh" firstAttribute="leading" secondItem="rVB-R8-Eq9" secondAttribute="leading" id="eIp-00-tLT"/>
+                            <constraint firstItem="YNg-Lw-Afh" firstAttribute="top" secondItem="kBi-Ls-tHE" secondAttribute="bottom" id="mTH-po-RMX"/>
+                            <constraint firstItem="Xwn-7e-m7r" firstAttribute="leading" secondItem="rVB-R8-Eq9" secondAttribute="leading" constant="16" id="ncb-LD-8Iu"/>
+                            <constraint firstItem="rVB-R8-Eq9" firstAttribute="bottom" secondItem="Xwn-7e-m7r" secondAttribute="bottom" constant="40" id="wLV-L2-d8V"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="rVB-R8-Eq9"/>
+                    </view>
+                    <size key="freeformSize" width="414" height="450"/>
+                    <connections>
+                        <outlet property="addButton" destination="L27-fc-sHZ" id="tQt-Uc-tJC"/>
+                        <outlet property="stackView" destination="Xwn-7e-m7r" id="CxS-Xy-2YU"/>
+                        <outlet property="stackViewBottomConstraint" destination="wLV-L2-d8V" id="5Bh-6d-wnI"/>
+                        <outlet property="tableView" destination="YNg-Lw-Afh" id="4bn-rP-gW8"/>
+                        <outlet property="typeTextField" destination="F3Z-xz-ApT" id="hza-9M-JkU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1fz-at-BOV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="9cP-ow-AhM" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2050.7246376811595" y="841.74107142857144"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="etB-zw-hjU">
@@ -643,6 +786,8 @@
         <image name="getDirection1" width="75" height="75"/>
         <image name="location" width="192" height="192"/>
         <image name="map" width="150" height="150"/>
+        <image name="pencil" catalog="system" width="64" height="56"/>
+        <image name="trash.fill" catalog="system" width="60" height="64"/>
         <image name="Местоположение2" width="35.5" height="36"/>
     </resources>
     <inferredMetricsTieBreakers>

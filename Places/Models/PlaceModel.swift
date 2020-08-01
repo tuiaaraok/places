@@ -28,3 +28,12 @@ class Place: Object {
         self.placeDescription = placeDescription
     }
 }
+
+class Type: Object {
+    @objc dynamic var type: String?
+    
+    convenience init(type: String?) {
+        self.init()
+        self.type = type
+    }
+}

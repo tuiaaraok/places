@@ -7,5 +7,6 @@ target 'Places' do
 
   pod 'RealmSwift'
   pod 'Cosmos', '~> 22.1'
+  pod 'BonsaiController'
 
 end
