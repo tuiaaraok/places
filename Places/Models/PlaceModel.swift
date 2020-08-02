@@ -31,9 +31,17 @@ class Place: Object {
 
 class Type: Object {
     @objc dynamic var type: String?
-    
+
     convenience init(type: String?) {
         self.init()
         self.type = type
     }
 }
+//class Type {
+//    var type: String?
+//    convenience init(type: String?) {
+//        self.init()
+//        self.type = type
+//    }
+//
+//}

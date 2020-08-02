@@ -14,6 +14,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     private let searchController = UISearchController(searchResultsController: nil)
     private var places: Results<Place>!
     private var filteredPlaces: Results<Place>!
+    private var placesOfType: LazyFilterSequence<Results<Place>>! //Results<Place>!
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else {return false}
         return text.isEmpty
@@ -33,8 +34,11 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        typesRealm = realm.objects(Type.self)
+      
         tableView.rowHeight = 85
         places = realm.objects(Place.self)
+
         
         // Setup the search controller
         searchController.searchResultsUpdater = self
@@ -51,20 +55,42 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         definesPresentationContext = true // позволяет отпустить строку поиска при переходе на др экран
     }
     
-    
     // MARK: - Table view data sourse
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+       
+        return segmentedControl.selectedSegmentIndex == 0 ? typesRealm.count : 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering {
-            return filteredPlaces.count
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            if segmentedControl.selectedSegmentIndex == 0 {
+                sortedByTypes(type: typesRealm[indexPath.row].type!)
+                return placesOfType.count
+            }
+            else if isFiltering {
+                return filteredPlaces.count
+            }
+           
         }
-        return places.count
+         return places.count
      }
      
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
 
-        let place = isFiltering ? filteredPlaces[indexPath.row] : places[indexPath.row]
+        let place: Place //isFiltering ? filteredPlaces[indexPath.row] : places[indexPath.row]
+        
+        if segmentedControl.selectedSegmentIndex == 0 {
+             sortedByTypes(type: typesRealm[indexPath.row].type!)
+            place = placesOfType[indexPath.row]
+        } else if isFiltering {
+            place = filteredPlaces[indexPath.row]
+        } else {
+            place = places[indexPath.row]
+        }
+        
       
         cell.nameLabel?.text = place.name
         cell.locationLabel.text = place.location
@@ -136,14 +162,19 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     
     private func sorting() {
         
-        if segmentedControl.selectedSegmentIndex == 0{ // если нулевой сегмент
+        if segmentedControl.selectedSegmentIndex == 1 { // если нулевой сегмент
             places = places.sorted(byKeyPath: "date", ascending: ascendingSorting) // в завис от того, какое знач имеет свойство, сортировка будет  другой
-        } else {
+        } else if segmentedControl.selectedSegmentIndex == 2 {
             places = places.sorted(byKeyPath: "name", ascending: ascendingSorting)
         }
         
         tableView.reloadData()
     }
+    
+    private func sortedByTypes(type: String) {
+         placesOfType = places.filter{$0.type == type}
+    }
+
 }
 
 extension MainViewController: UISearchResultsUpdating {

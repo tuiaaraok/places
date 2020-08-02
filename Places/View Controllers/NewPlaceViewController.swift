@@ -10,11 +10,11 @@ import UIKit
 import Cosmos
 import RealmSwift
 import BonsaiController
-
+ var typesRealm: Results<Type>! //= [Type(type: "Ресторан"), Type(type: "Кафе"), Type(type: "Путешествия"), Type(type: "Приключение"), Type(type: "Событие")]
 class NewPlaceViewController: UITableViewController {
     
     var currentPlace: Place!
-    var typesRealm: Results<Type>!
+   
     var imageIsChanged = false
     var currentRating = 0.0
     var textViewPlaceholderText: String = "Добавьте описание"
@@ -35,14 +35,8 @@ class NewPlaceViewController: UITableViewController {
         super.viewDidLoad()
         
         typesRealm = realm.objects(Type.self)
-    
- 
-//            for type in types {
-//                StorageManager.saveType(Type(type: type))
-//            }
         
-        
-        print(typesRealm.count)
+       
         
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -66,6 +60,14 @@ class NewPlaceViewController: UITableViewController {
        setupNavigationBarItem()
     }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        if let places = UserDefaults.standard.value(forKey: "types") {
+//                          typesRealm = (places as? [Type])
+//            print("iiii")
+//                      }
+//    }
+//    
     // MARK: - Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -115,8 +117,7 @@ class NewPlaceViewController: UITableViewController {
             mapVC.place.imageData = placeImage.image?.pngData()
             mapVC.place.placeDescription = placeDescription.text
         }
-        
-        }
+    }
            
         if segue.destination is TypeEditSmallViewController {
             segue.destination.transitioningDelegate = self
@@ -125,36 +126,35 @@ class NewPlaceViewController: UITableViewController {
     }
 
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {
-        
         placeType.text = typesRealm.last?.type
         pickerView.reloadAllComponents()
     }
     
        func savePlace() {
+        
+        let image = imageIsChanged ? placeImage.image : #imageLiteral(resourceName: "Шар")
+        let imageData = image?.pngData()
            
-           let image = imageIsChanged ? placeImage.image : #imageLiteral(resourceName: "Шар")
-           let imageData = image?.pngData()
+        let newPlace = Place(name: placeName.text!,
+                            location: placeLocation.text,
+                            type: placeType.text!.isEmpty ? "Разное" : placeType.text,
+                            imageData: imageData,
+                            rating: currentRating,
+                            placeDescription: placeDescription.text)//Double(ratingControl.rating))
            
-           let newPlace = Place(name: placeName.text!,
-                                location: placeLocation.text,
-                                type: placeType.text,
-                                imageData: imageData,
-                                rating: currentRating,
-                                placeDescription: placeDescription.text)//Double(ratingControl.rating))
-           
-           if currentPlace != nil {
-               try! realm.write {
-                   currentPlace?.name = newPlace.name
-                   currentPlace?.type = newPlace.type
-                   currentPlace?.location = newPlace.location
-                   currentPlace?.imageData = newPlace.imageData
-                   currentPlace?.rating = newPlace.rating
-                   currentPlace?.placeDescription = newPlace.placeDescription
-               }
-           } else {
-                StorageManager.saveObct(newPlace)
-           }
-       }
+        if currentPlace != nil {
+            try! realm.write {
+                currentPlace?.name = newPlace.name
+                currentPlace?.type = newPlace.type
+                currentPlace?.location = newPlace.location
+                currentPlace?.imageData = newPlace.imageData
+                currentPlace?.rating = newPlace.rating
+                currentPlace?.placeDescription = newPlace.placeDescription
+            }
+        } else {
+            StorageManager.saveObct(newPlace)
+        }
+    }
     
     private func setupEditScreen() {
         if currentPlace != nil {
@@ -182,8 +182,7 @@ class NewPlaceViewController: UITableViewController {
     }
     
     private func setupNavigationBarItem() {
-    
-    // navigation item font settings
+        
         navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
         navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
         navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .disabled)
@@ -291,11 +290,11 @@ extension NewPlaceViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        typesRealm.count
+        typesRealm.count ?? 0
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return typesRealm?[row].type
+        return typesRealm[row].type
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

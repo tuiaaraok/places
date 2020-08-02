@@ -21,7 +21,13 @@ class TypeEditSmallViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        newPlaceVC.typesRealm = realm.objects(Type.self)
+        addButton.isEnabled = false
+        typeTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+        
+//        newPlaceVC.typesRealm = realm.objects(Type.self)
+//        if let places = UserDefaults.standard.value(forKey: "types") {
+//            typesRealm = (places as? [Type])!
+//        }
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -47,23 +53,11 @@ class TypeEditSmallViewController: UIViewController, UITextFieldDelegate {
         
         guard let newType = typeTextField.text else { return }
         StorageManager.saveType(Type(type: newType))
-      
         typeTextField.text = ""
         
         tableView.reloadData()
     }
     
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -89,6 +83,16 @@ class TypeEditSmallViewController: UIViewController, UITextFieldDelegate {
             self.view.layoutIfNeeded()
         })
     }
+    
+    @objc private func textFieldChanged() {
+           
+           if typeTextField.text?.isEmpty == false  { // если строка заполнена, кнопка активизируется
+               addButton.isEnabled = true
+           } else {
+               addButton.isEnabled = false
+           }
+       }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -100,14 +104,14 @@ class TypeEditSmallViewController: UIViewController, UITextFieldDelegate {
 extension TypeEditSmallViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newPlaceVC.typesRealm.count
+        return typesRealm.count 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "typeCell", for: indexPath) as! TypeTableViewCell
         
-        cell.textLabel?.text = newPlaceVC.typesRealm[indexPath.row].type
+        cell.textLabel?.text = typesRealm[indexPath.row].type
         cell.textLabel?.font = UIFont(name: "Gilroy-Medium", size: 17)
         
         if let deleteButton = cell.deleteButton {
@@ -120,7 +124,7 @@ extension TypeEditSmallViewController: UITableViewDelegate, UITableViewDataSourc
     @objc func deleteRow(_ sender: UIButton) {
         let point = sender.convert(CGPoint.zero, to: tableView)
         guard let indexPath = tableView.indexPathForRow(at: point) else { return }
-        StorageManager.deleteType(newPlaceVC.typesRealm[indexPath.row])
+        StorageManager.deleteType(typesRealm[indexPath.row])
         tableView.reloadData()
     }
 }
