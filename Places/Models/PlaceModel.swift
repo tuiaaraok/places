@@ -37,11 +37,4 @@ class Type: Object {
         self.type = type
     }
 }
-//class Type {
-//    var type: String?
-//    convenience init(type: String?) {
-//        self.init()
-//        self.type = type
-//    }
-//
-//}
+

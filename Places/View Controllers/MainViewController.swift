@@ -14,15 +14,17 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     private let searchController = UISearchController(searchResultsController: nil)
     private var places: Results<Place>!
     private var filteredPlaces: Results<Place>!
-    private var placesOfType: LazyFilterSequence<Results<Place>>! //Results<Place>!
+    private var placesOfType: [[Place]] = []
+    private var newPlaceVC = NewPlaceViewController()
+    private var ascendingSorting = true
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else {return false}
         return text.isEmpty
     }
-    private var ascendingSorting = true
     private var isFiltering: Bool {
         return searchController.isActive && !searchBarIsEmpty
     }
+    
     
     
     @IBOutlet var tableView: UITableView!
@@ -34,12 +36,11 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        typesRealm = realm.objects(Type.self)
+        newPlaceVC.typesRealm = realm.objects(Type.self)
       
         tableView.rowHeight = 85
         places = realm.objects(Place.self)
 
-        
         // Setup the search controller
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false // позволит взаимодействоавть с измененным вью контроллером как с основным
@@ -59,20 +60,15 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     
     func numberOfSections(in tableView: UITableView) -> Int {
        
-        return segmentedControl.selectedSegmentIndex == 0 ? typesRealm.count : 1
+        return segmentedControl.selectedSegmentIndex == 0 ? placesOfType.count : 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if let indexPath = tableView.indexPathForSelectedRow {
             if segmentedControl.selectedSegmentIndex == 0 {
-                sortedByTypes(type: typesRealm[indexPath.row].type!)
-                return placesOfType.count
-            }
-            else if isFiltering {
+                return placesOfType[section].count
+            } else if isFiltering {
                 return filteredPlaces.count
-            }
-           
         }
          return places.count
      }
@@ -80,18 +76,16 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
 
-        let place: Place //isFiltering ? filteredPlaces[indexPath.row] : places[indexPath.row]
+        let place: Place
         
         if segmentedControl.selectedSegmentIndex == 0 {
-             sortedByTypes(type: typesRealm[indexPath.row].type!)
-            place = placesOfType[indexPath.row]
+            place = placesOfType[indexPath.section][indexPath.row]
         } else if isFiltering {
             place = filteredPlaces[indexPath.row]
         } else {
             place = places[indexPath.row]
         }
         
-      
         cell.nameLabel?.text = place.name
         cell.locationLabel.text = place.location
         cell.typeLabel.text = place.type
@@ -101,17 +95,16 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         return cell
      }
     
-    
      // MARK: - Table view delegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true) // отменяем выделение ячейки
     }
     
-    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let place = places[indexPath.row]
+        
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
             StorageManager.deleteObject(place)
             tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -121,18 +114,55 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         return swipeActions
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            return placesOfType[section][0].type
+        }
+        return ""
+    }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
+                   view.backgroundColor = #colorLiteral(red: 0.588359559, green: 0.8278771763, blue: 0.9216118847, alpha: 1)
+                   
+                   let label = UILabel(frame: CGRect(x: 15, y: -6, width: view.frame.width, height: 40))
+                   label.text = placesOfType[section][0].type
+                   label.font = UIFont(name: "Gilroy-Bold", size: 20)
+                   label.textColor = .white
+                   view.addSubview(label)
+            return view
+        } else {
+            return nil
+        }
+    }
+    
+    @IBAction func changeSegment() {
+        for type in newPlaceVC.typesRealm {
+            sortedByTypes(type: type.type!)
+        }
+        tableView.reloadData()
+    }
+    
+    // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "detail" {
             guard let indexPath = tableView.indexPathForSelectedRow else {return}
             
-            let place = isFiltering ? filteredPlaces[indexPath.row] : places[indexPath.row]
+            var place: Place
+           
+            if segmentedControl.selectedSegmentIndex == 0 {
+                place = placesOfType[indexPath.section][indexPath.row]
+            } else if isFiltering {
+                place = filteredPlaces[indexPath.row]
+            } else {
+                place = places[indexPath.row]
+            }
             let newPlaceVC = segue.destination as! NewPlaceViewController
             newPlaceVC.currentPlace = place
         }
     }
-    
     
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {
         
@@ -141,6 +171,8 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
        
         tableView.reloadData()
     }
+    
+    // MARK: - Sorting methods
     
     @IBAction func sortSelection(_ sender: UISegmentedControl) {
         
@@ -172,9 +204,28 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     private func sortedByTypes(type: String) {
-         placesOfType = places.filter{$0.type == type}
+        
+        var array: [Place] = []
+        
+        for place in places {
+            if place.type == type {
+                array.append(place)
+            }
+        }
+        if array.count > 0 {
+            placesOfType.append(array)
+        }
     }
-
+    
+    private func changeDeletedTypes(place: Place) {
+//        for type in newPlaceVC.typesRealm {
+//            if place.type != type.type {
+//                StorageManager.changeType(place, newType: "Разное")
+//            }
+//        }
+//        if !newPlaceVC.typesRealm.contains(place.type) {
+//        }
+    }
 }
 
 extension MainViewController: UISearchResultsUpdating {

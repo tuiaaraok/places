@@ -10,7 +10,7 @@ import UIKit
 import Cosmos
 import RealmSwift
 import BonsaiController
- var typesRealm: Results<Type>! //= [Type(type: "Ресторан"), Type(type: "Кафе"), Type(type: "Путешествия"), Type(type: "Приключение"), Type(type: "Событие")]
+ 
 class NewPlaceViewController: UITableViewController {
     
     var currentPlace: Place!
@@ -20,7 +20,7 @@ class NewPlaceViewController: UITableViewController {
     var textViewPlaceholderText: String = "Добавьте описание"
     var pickerView = UIPickerView()
     var types = ["Ресторан", "Кафе", "Путешествия", "Приключение", "Событие"]
-    
+    var typesRealm: Results<Type>! 
 
     @IBOutlet var placeImage: UIImageView!
     @IBOutlet var saveButton: UIBarButtonItem!
@@ -35,8 +35,6 @@ class NewPlaceViewController: UITableViewController {
         super.viewDidLoad()
         
         typesRealm = realm.objects(Type.self)
-        
-       
         
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -60,14 +58,10 @@ class NewPlaceViewController: UITableViewController {
        setupNavigationBarItem()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        if let places = UserDefaults.standard.value(forKey: "types") {
-//                          typesRealm = (places as? [Type])
-//            print("iiii")
-//                      }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewWillAppear(anim)
 //    }
-//    
+       
     // MARK: - Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -82,12 +76,10 @@ class NewPlaceViewController: UITableViewController {
             let camera = UIAlertAction(title: "Камера", style: .default) { (_) in
                 self.chooseImagePicker(source: .camera)
             }
-        //    camera.setValue(cameraIcon, forKey: "image")
             
             let photo = UIAlertAction(title: "Галерея", style: .default) { (_) in
                 self.chooseImagePicker(source: .photoLibrary)
             }
-          //  photoIcon.setValue(photoIcon, forKey: "image")
             
             let cancel = UIAlertAction(title: "Отмена", style: .cancel)
             

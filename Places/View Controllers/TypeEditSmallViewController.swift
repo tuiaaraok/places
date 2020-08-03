@@ -21,13 +21,9 @@ class TypeEditSmallViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        newPlaceVC.typesRealm = realm.objects(Type.self)
         addButton.isEnabled = false
         typeTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
-        
-//        newPlaceVC.typesRealm = realm.objects(Type.self)
-//        if let places = UserDefaults.standard.value(forKey: "types") {
-//            typesRealm = (places as? [Type])!
-//        }
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -104,14 +100,14 @@ class TypeEditSmallViewController: UIViewController, UITextFieldDelegate {
 extension TypeEditSmallViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return typesRealm.count 
+        return newPlaceVC.typesRealm.count 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "typeCell", for: indexPath) as! TypeTableViewCell
         
-        cell.textLabel?.text = typesRealm[indexPath.row].type
+        cell.textLabel?.text = newPlaceVC.typesRealm[indexPath.row].type
         cell.textLabel?.font = UIFont(name: "Gilroy-Medium", size: 17)
         
         if let deleteButton = cell.deleteButton {
@@ -124,7 +120,7 @@ extension TypeEditSmallViewController: UITableViewDelegate, UITableViewDataSourc
     @objc func deleteRow(_ sender: UIButton) {
         let point = sender.convert(CGPoint.zero, to: tableView)
         guard let indexPath = tableView.indexPathForRow(at: point) else { return }
-        StorageManager.deleteType(typesRealm[indexPath.row])
+        StorageManager.deleteType(newPlaceVC.typesRealm[indexPath.row])
         tableView.reloadData()
     }
 }

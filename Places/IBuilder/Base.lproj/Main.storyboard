@@ -134,6 +134,7 @@
                                 </segments>
                                 <color key="tintColor" red="0.62771946190000005" green="0.8501312137" blue="0.93828701969999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
+                                    <action selector="changeSegment" destination="BYZ-38-t0r" eventType="valueChanged" id="BhD-Dv-Ads"/>
                                     <action selector="sortSelection:" destination="BYZ-38-t0r" eventType="valueChanged" id="hDq-j7-YaI"/>
                                 </connections>
                             </segmentedControl>

@@ -39,4 +39,11 @@ class StorageManager {
             realm.add(type)
         }
     }
+    
+    static func changeType (_ type: Type, newType: String) {
+           
+           try! realm.write {
+            type.type = newType
+           }
+       }
 }
