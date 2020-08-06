@@ -87,7 +87,6 @@ class MapViewController: UIViewController {
             goButton.isHidden = false
         }
     }
-
 }
 
 extension MapViewController: MKMapViewDelegate {
