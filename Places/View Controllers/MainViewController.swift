@@ -25,32 +25,32 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         return searchController.isActive && !searchBarIsEmpty
     }
     
-    
-    
+    private var firstSegmentSelected: Bool {
+        return segmentedControl.selectedSegmentIndex == 0
+    }
+
     @IBOutlet var tableView: UITableView!
     @IBOutlet var reversedSortingButton: UIBarButtonItem!
     @IBOutlet var segmentedControl: UISegmentedControl!
     
-   
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
         newPlaceVC.typesRealm = realm.objects(Type.self)
-      
-        tableView.rowHeight = 85
         places = realm.objects(Place.self)
-
+//        changeDeletedTypes()
+        
         // Setup the search controller
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false // позволит взаимодействоавть с измененным вью контроллером как с основным
         searchController.searchBar.placeholder = "Поиск"
+        
+        tableView.rowHeight = 85
       
         let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(red: 0.588359559, green: 0.8278771763, blue: 0.9216118847, alpha: 1)]
         let titleTextAttributes2 = [NSAttributedString.Key.foregroundColor: UIColor.white]
         segmentedControl.setTitleTextAttributes(titleTextAttributes2, for: .normal)
         segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
-        
         
         navigationItem.searchController = searchController
         definesPresentationContext = true // позволяет отпустить строку поиска при переходе на др экран
@@ -60,16 +60,23 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     
     func numberOfSections(in tableView: UITableView) -> Int {
        
-        return segmentedControl.selectedSegmentIndex == 0 ? placesOfType.count : 1
+        if isFiltering {
+            return 1
+        } else if firstSegmentSelected {
+            return placesOfType.count
+        }
+        return  1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-            if segmentedControl.selectedSegmentIndex == 0 {
-                return placesOfType[section].count
-            } else if isFiltering {
-                return filteredPlaces.count
+        if isFiltering {
+            return filteredPlaces.count
         }
+        if firstSegmentSelected {
+            return placesOfType[section].count
+        }
+        
          return places.count
      }
      
@@ -78,10 +85,10 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
 
         let place: Place
         
-        if segmentedControl.selectedSegmentIndex == 0 {
-            place = placesOfType[indexPath.section][indexPath.row]
-        } else if isFiltering {
+        if isFiltering {
             place = filteredPlaces[indexPath.row]
+        } else  if firstSegmentSelected {
+            place = placesOfType[indexPath.section][indexPath.row]
         } else {
             place = places[indexPath.row]
         }
@@ -103,14 +110,26 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let place = places[indexPath.row]
+        var place = places[indexPath.row]
+        
+        if firstSegmentSelected {
+            place = placesOfType[indexPath.section][indexPath.row]
+        }
         
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
             StorageManager.deleteObject(place)
+            
+            let section = indexPath.section
+            let row = indexPath.row
+            
+            if self.firstSegmentSelected {
+                self.placesOfType[section].remove(at: row)
+            }
+            
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])
-
+        
         return swipeActions
     }
     
@@ -124,13 +143,13 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if segmentedControl.selectedSegmentIndex == 0 {
             let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
-                   view.backgroundColor = #colorLiteral(red: 0.588359559, green: 0.8278771763, blue: 0.9216118847, alpha: 1)
+            view.backgroundColor = #colorLiteral(red: 0.588359559, green: 0.8278771763, blue: 0.9216118847, alpha: 1)
                    
-                   let label = UILabel(frame: CGRect(x: 15, y: -6, width: view.frame.width, height: 40))
-                   label.text = placesOfType[section][0].type
-                   label.font = UIFont(name: "Gilroy-Bold", size: 20)
-                   label.textColor = .white
-                   view.addSubview(label)
+            let label = UILabel(frame: CGRect(x: 15, y: -6, width: view.frame.width, height: 40))
+            label.text = placesOfType[section][0].type
+            label.font = UIFont(name: "Gilroy-Bold", size: 20)
+            label.textColor = .white
+            view.addSubview(label)
             return view
         } else {
             return nil
@@ -138,10 +157,16 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     @IBAction func changeSegment() {
-        for type in newPlaceVC.typesRealm {
-            sortedByTypes(type: type.type!)
+        
+        if firstSegmentSelected {
+            reversedSortingButton.image = .none
+            placesOfType = []
+            for type in newPlaceVC.typesRealm {
+                sortedByTypes(type: type.type!)
+            }
+        } else {
+            reversedSortingButton.image = ascendingSorting ? #imageLiteral(resourceName: "AZ") : #imageLiteral(resourceName: "ZA")
         }
-        tableView.reloadData()
     }
     
     // MARK: - Navigation
@@ -152,7 +177,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
             
             var place: Place
            
-            if segmentedControl.selectedSegmentIndex == 0 {
+            if firstSegmentSelected {
                 place = placesOfType[indexPath.section][indexPath.row]
             } else if isFiltering {
                 place = filteredPlaces[indexPath.row]
@@ -168,6 +193,8 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         
         guard let newPlaceVC = segue.source as? NewPlaceViewController else { return }
         newPlaceVC.savePlace()
+    
+        changeSegment()
        
         tableView.reloadData()
     }
@@ -183,11 +210,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         
         ascendingSorting.toggle()
         
-        if ascendingSorting {
-            reversedSortingButton.image = #imageLiteral(resourceName: "AZ")
-        } else {
-            reversedSortingButton.image = #imageLiteral(resourceName: "ZA")
-        }
+        reversedSortingButton.image = ascendingSorting ? #imageLiteral(resourceName: "AZ") : #imageLiteral(resourceName: "ZA")
         
         sorting()
     }
@@ -217,14 +240,13 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
     
-    private func changeDeletedTypes(place: Place) {
-//        for type in newPlaceVC.typesRealm {
-//            if place.type != type.type {
-//                StorageManager.changeType(place, newType: "Разное")
-//            }
-//        }
-//        if !newPlaceVC.typesRealm.contains(place.type) {
-//        }
+    func changeDeletedTypes() {
+      
+        for place in places {
+            if !newPlaceVC.typesRealm.contains(Type(type: place.type)) {
+                StorageManager.changeType(place, newType: "Разное")
+            }
+        }
     }
 }
 

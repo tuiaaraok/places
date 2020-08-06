@@ -100,7 +100,7 @@ class TypeEditSmallViewController: UIViewController, UITextFieldDelegate {
 extension TypeEditSmallViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newPlaceVC.typesRealm.count 
+        return newPlaceVC.typesRealm.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

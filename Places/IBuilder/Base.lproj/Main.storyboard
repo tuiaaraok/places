@@ -152,7 +152,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="My Places" id="OjX-KZ-e6e">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="AZ" id="B6V-GV-YIQ">
+                        <barButtonItem key="leftBarButtonItem" image="AZ" id="B6V-GV-YIQ">
                             <connections>
                                 <action selector="reversedSorting:" destination="BYZ-38-t0r" id="3F3-8h-ClS"/>
                             </connections>

@@ -39,6 +39,9 @@ class NewPlaceViewController: UITableViewController {
         pickerView.delegate = self
         pickerView.dataSource = self
         placeType.inputView = pickerView
+        pickerView.backgroundColor = #colorLiteral(red: 0.6277194619, green: 0.8501312137, blue: 0.9382870197, alpha: 1)
+        
+        
         
         setupTextView()
         
@@ -274,7 +277,7 @@ extension NewPlaceViewController: MapViewControllerDelegate {
     }
 }
 
-// MARK: - UIPickerViewDelegate, UIPickerViewDataSource
+// MARK: - UIPickerViewDataSource
 
 extension NewPlaceViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -282,17 +285,29 @@ extension NewPlaceViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        typesRealm.count ?? 0
+        typesRealm.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return typesRealm[row].type
     }
     
+// MARK: - UIPickerViewDelegate
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         placeType.text = typesRealm[row].type
         placeType.resignFirstResponder()
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let title = UILabel()
+            title.font = UIFont(name: "Gilroy-Bold", size: 22)
+            title.textColor = UIColor.white
+        title.text =  typesRealm[row].type
+            title.textAlignment = .center
+
+        return title
     }
 }
 

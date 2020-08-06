@@ -40,10 +40,10 @@ class StorageManager {
         }
     }
     
-    static func changeType (_ type: Type, newType: String) {
+    static func changeType (_ place: Place, newType: String) {
            
            try! realm.write {
-            type.type = newType
+            place.type = newType
            }
        }
 }
