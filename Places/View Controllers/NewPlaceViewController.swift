@@ -19,7 +19,7 @@ class NewPlaceViewController: UITableViewController {
     var currentRating = 0.0
     var textViewPlaceholderText: String = "Добавьте описание"
     var pickerView = UIPickerView()
-    var types = ["Ресторан", "Кафе", "Путешествия", "Приключение", "Событие"]
+//    var types = ["Ресторан", "Кафе", "Путешествия", "Приключение", "Событие"]
     var typesRealm: Results<Type>! 
 
     @IBOutlet var placeImage: UIImageView!
@@ -41,8 +41,6 @@ class NewPlaceViewController: UITableViewController {
         placeType.inputView = pickerView
         pickerView.backgroundColor = #colorLiteral(red: 0.6277194619, green: 0.8501312137, blue: 0.9382870197, alpha: 1)
         
-        
-        
         setupTextView()
         
         tableView.tableFooterView = UIView(frame: CGRect(x: 0,
@@ -60,10 +58,6 @@ class NewPlaceViewController: UITableViewController {
         
        setupNavigationBarItem()
     }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewWillAppear(anim)
-//    }
        
     // MARK: - Table view delegate
     
@@ -322,21 +316,6 @@ extension NewPlaceViewController: BonsaiControllerDelegate {
     // return a Bonsai Controller with SlideIn or Bubble transition animator
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
     
-        /// With Background Color ///
-    
-        // Slide animation from .left, .right, .top, .bottom
         return BonsaiController(fromDirection: .bottom, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
-        
-        // or Bubble animation initiated from a view
-        //return BonsaiController(fromView: yourOriginView, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
-    
-    
-        /// With Blur Style ///
-        
-        // Slide animation from .left, .right, .top, .bottom
-        //return BonsaiController(fromDirection: .bottom, blurEffectStyle: .light, presentedViewController: presented, delegate: self)
-        
-        // or Bubble animation initiated from a view
-        //return BonsaiController(fromView: yourOriginView, blurEffectStyle: .dark,  presentedViewController: presented, delegate: self)
     }
 }
