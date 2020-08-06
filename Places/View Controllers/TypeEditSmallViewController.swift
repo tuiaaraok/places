@@ -88,11 +88,6 @@ class TypeEditSmallViewController: UIViewController, UITextFieldDelegate {
                addButton.isEnabled = false
            }
        }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 }
 
  // MARK: - Table vie data source
