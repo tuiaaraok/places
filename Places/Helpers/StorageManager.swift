@@ -26,10 +26,24 @@ class StorageManager {
         }
     }
     
-    static func saveType (_ type: Type) {
+    static func deleteType (_ type: Type) {
            
            try! realm.write {
-               realm.add(type)
+               realm.delete(type)
+           }
+       }
+    
+    static func saveType (_ type: Type) {
+        
+        try! realm.write {
+            realm.add(type)
+        }
+    }
+    
+    static func changeType (_ place: Place, newType: String) {
+           
+           try! realm.write {
+            place.type = newType
            }
        }
 }

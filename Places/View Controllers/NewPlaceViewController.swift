@@ -8,15 +8,20 @@
 
 import UIKit
 import Cosmos
-import RealmSwift
-
+import RealmSwiftes
+import BonsaiController
+ 
 class NewPlaceViewController: UITableViewController {
     
     var currentPlace: Place!
+   
     var imageIsChanged = false
     var currentRating = 0.0
     var pickerView = UIPickerView()
     var textViewPlaceholderText: String = "Добавьте описание"
+    var pickerView = UIPickerView()
+//    var types = ["Ресторан", "Кафе", "Путешествия", "Приключение", "Событие"]
+    var typesRealm: Results<Type>! 
 
     
   //  private var types: Results<Type>!
@@ -39,6 +44,13 @@ class NewPlaceViewController: UITableViewController {
        
         placeType.inputView = pickerView
         
+        typesRealm = realm.objects(Type.self)
+        
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        placeType.inputView = pickerView
+        pickerView.backgroundColor = #colorLiteral(red: 0.6277194619, green: 0.8501312137, blue: 0.9382870197, alpha: 1)
+        
         setupTextView()
         
         tableView.tableFooterView = UIView(frame: CGRect(x: 0,
@@ -53,11 +65,8 @@ class NewPlaceViewController: UITableViewController {
         cosmosView.didTouchCosmos = { rating in
             self.currentRating = rating
         }
-        
-        setupNavigationBarItem()
-        setupNavigationBar()
     }
-    
+       
     // MARK: - Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -93,11 +102,8 @@ class NewPlaceViewController: UITableViewController {
        
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
            
-        guard
-            let identifier = segue.identifier,
-            let mapVC = segue.destination as? MapViewController
-            else { return }
-           
+      if let identifier = segue.identifier,
+        let mapVC = segue.destination as? MapViewController {
         mapVC.incomeSegueIdentifier = identifier
         mapVC.mapViewControllerDelegate = self
            
@@ -109,16 +115,26 @@ class NewPlaceViewController: UITableViewController {
             mapVC.place.placeDescription = placeDescription.text
         }
     }
-
-    func savePlace() {
            
+        if segue.destination is TypeEditSmallViewController {
+            segue.destination.transitioningDelegate = self
+            segue.destination.modalPresentationStyle = .custom
+        }
+    }
+
+    @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {
+        placeType.text = typesRealm.last?.type
+        pickerView.reloadAllComponents()
+    }
+    
+       func savePlace() {
+        
         let image = imageIsChanged ? placeImage.image : #imageLiteral(resourceName: "Шар")
-        
         let imageData = image?.pngData()
-        
+           
         let newPlace = Place(name: placeName.text!,
                             location: placeLocation.text,
-                            type: placeType.text,
+                            type: placeType.text!.isEmpty ? "Разное" : placeType.text,
                             imageData: imageData,
                             rating: currentRating,
                             placeDescription: placeDescription.text)//Double(ratingControl.rating))
@@ -163,6 +179,20 @@ class NewPlaceViewController: UITableViewController {
         navigationItem.leftBarButtonItem = nil
         title = currentPlace?.name
         saveButton.isEnabled = true
+    }
+    
+    private func setupNavigationBarItem() {
+        
+        navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
+        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .disabled)
+    }
+    
+    @IBAction func chooseType() {
+        
+        if placeType.placeholder == textViewPlaceholderText {
+            placeType.willRemoveSubview(pickerView)
+        }
     }
     
     @IBAction func cancelAction(_ sender: Any) {
@@ -234,7 +264,6 @@ extension NewPlaceViewController: UIImagePickerControllerDelegate, UINavigationC
         }
     }
     
-    // присваиваем изобр
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         placeImage.image = info[.editedImage] as? UIImage // editedImage позвол исп отредакт вариант изобр
@@ -252,39 +281,54 @@ extension NewPlaceViewController: MapViewControllerDelegate {
     }
 }
 
-extension NewPlaceViewController {
-       
-       private func setupNavigationBarItem() {
-        
-        navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
-        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
-        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .disabled)
-       }
-   }
+// MARK: - UIPickerViewDataSource
 
-extension NewPlaceViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+extension NewPlaceViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+ 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return types.count
+        typesRealm.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return types[row]
+        return typesRealm[row].type
     }
     
+// MARK: - UIPickerViewDelegate
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        placeType.text = types[row]
-       
-        if types[row] == "Добавить тип" || placeType.text == "Добавить тип" {
-            placeType.text = ""
-            placeType.placeholder = "Добавить тип"
         
-        } else {
-         placeType.resignFirstResponder()
-        }
+        placeType.text = typesRealm[row].type
+        placeType.resignFirstResponder()
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let title = UILabel()
+            title.font = UIFont(name: "Gilroy-Bold", size: 22)
+            title.textColor = UIColor.white
+        title.text =  typesRealm[row].type
+            title.textAlignment = .center
+
+        return title
     }
 }
 
+// MARK: - Bonsai Controller Delegate
+extension NewPlaceViewController: BonsaiControllerDelegate {
+    
+    // return the frame of your Bonsai View Controller
+    func frameOfPresentedView(in containerViewFrame: CGRect) -> CGRect {
+        
+        return CGRect(origin: CGPoint(x: 0, y: containerViewFrame.height / 2), size: CGSize(width: containerViewFrame.width, height: containerViewFrame.height / (2)))
+    }
+    
+    // return a Bonsai Controller with SlideIn or Bubble transition animator
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+    
+
+        return BonsaiController(fromDirection: .bottom, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
+    }
+}
