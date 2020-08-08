@@ -199,7 +199,6 @@
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6GK-AY-DsL">
                                                     <rect key="frame" x="344" y="353" width="50" height="50"/>
-                                                    <color key="backgroundColor" red="1" green="0.86942623259999996" blue="0.83032945020000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="QDK-Y9-bNo"/>
                                                         <constraint firstAttribute="height" constant="50" id="tc3-ve-h78"/>

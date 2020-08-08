@@ -65,6 +65,7 @@ class NewPlaceViewController: UITableViewController {
         cosmosView.didTouchCosmos = { rating in
             self.currentRating = rating
         }
+        setupNavigationBarItem()
     }
        
     // MARK: - Table view delegate
@@ -235,7 +236,7 @@ extension NewPlaceViewController: UITextViewDelegate {
             textView.text = ""
             textView.textColor = .black
         } else if !textView.text.isEmpty {
-             textView.textColor = .black
+             textView.textColor = .lightGray
         }
     }
     
