@@ -8,7 +8,7 @@
 
 import UIKit
 import Cosmos
-import RealmSwift
+import RealmSwiftes
 import BonsaiController
  
 class NewPlaceViewController: UITableViewController {
@@ -17,10 +17,15 @@ class NewPlaceViewController: UITableViewController {
    
     var imageIsChanged = false
     var currentRating = 0.0
+    var pickerView = UIPickerView()
     var textViewPlaceholderText: String = "Добавьте описание"
     var pickerView = UIPickerView()
 //    var types = ["Ресторан", "Кафе", "Путешествия", "Приключение", "Событие"]
     var typesRealm: Results<Type>! 
+
+    
+  //  private var types: Results<Type>!
+    var types = ["Ресторан", "Кафе", "Приключения", "Путешествия", "Событие", "Добавить тип"]
 
     @IBOutlet var placeImage: UIImageView!
     @IBOutlet var saveButton: UIBarButtonItem!
@@ -33,6 +38,11 @@ class NewPlaceViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        pickerView.delegate = self
+        pickerView.dataSource = self
+       
+        placeType.inputView = pickerView
         
         typesRealm = realm.objects(Type.self)
         
@@ -55,8 +65,6 @@ class NewPlaceViewController: UITableViewController {
         cosmosView.didTouchCosmos = { rating in
             self.currentRating = rating
         }
-        
-       setupNavigationBarItem()
     }
        
     // MARK: - Table view delegate
@@ -163,7 +171,10 @@ class NewPlaceViewController: UITableViewController {
     
     private func setupNavigationBar() {
         if let topItem = navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+            topItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                        style: .plain,
+                                                        target: nil,
+                                                        action: nil)
         }
         navigationItem.leftBarButtonItem = nil
         title = currentPlace?.name
@@ -273,6 +284,7 @@ extension NewPlaceViewController: MapViewControllerDelegate {
 // MARK: - UIPickerViewDataSource
 
 extension NewPlaceViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+ 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
