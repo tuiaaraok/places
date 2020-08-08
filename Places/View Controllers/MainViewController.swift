@@ -18,7 +18,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     private var newPlaceVC = NewPlaceViewController()
     private var ascendingSorting = true
     private var searchBarIsEmpty: Bool {
-        guard let text = searchController.searchBar.text else {return false}
+        guard let text = searchController.searchBar.text else { return false }
         return text.isEmpty
     }
     private var isFiltering: Bool {
@@ -244,7 +244,6 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     
     func changeDeletedTypes() {
 //  изменить удаленные типы
-
     }
 }
 
