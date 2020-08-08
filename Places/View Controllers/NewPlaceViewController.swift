@@ -33,11 +33,6 @@ class NewPlaceViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-//        pickerView.delegate = self
-//        pickerView.dataSource = self
-//       
-//        placeType.inputView = pickerView
         
         typesRealm = realm.objects(Type.self)
         
@@ -133,7 +128,7 @@ class NewPlaceViewController: UITableViewController {
                             type: placeType.text!.isEmpty ? "Разное" : placeType.text,
                             imageData: imageData,
                             rating: currentRating,
-                            placeDescription: placeDescription.text)//Double(ratingControl.rating))
+                            placeDescription: placeDescription.text)
            
         if currentPlace != nil {
             try! realm.write {
@@ -159,7 +154,7 @@ class NewPlaceViewController: UITableViewController {
             placeName.text = currentPlace?.name
             placeLocation.text = currentPlace?.location
             placeType.text = currentPlace?.type
-            cosmosView.rating = currentPlace.rating//Int(currentPlace.rating)
+            cosmosView.rating = currentPlace.rating
             placeDescription.text = currentPlace?.placeDescription
             placeDescription.textColor = .black
         }
