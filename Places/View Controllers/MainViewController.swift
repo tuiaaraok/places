@@ -243,25 +243,25 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func changeDeletedTypes() {
-        var array: [Type] = []
-        var placeArray: [Place] = []
-        
-        for type in newPlaceVC.typesRealm {
-            array.append(type)
-        }
-       for place in places {
-                  for type in newPlaceVC.typesRealm {
-                      if place.type == type.type {
-                        placeArray.append(place)
-                          
-                      } else {
-//                        print(place.type)
-                    }
-                    
-                  }
-              }
-
-         print(placeArray)
+//        var array: [Type] = []
+//        var placeArray: [Place] = []
+//        
+//        for type in newPlaceVC.typesRealm {
+//            array.append(type)
+//        }
+//       for place in places {
+//                  for type in newPlaceVC.typesRealm {
+//                      if place.type == type.type {
+//                        placeArray.append(place)
+//                          
+//                      } else {
+////                        print(place.type)
+//                    }
+//                    
+//                  }
+//              }
+//
+//         print(placeArray)
     }
 }
 
