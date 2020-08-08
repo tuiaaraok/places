@@ -19,12 +19,7 @@ class NewPlaceViewController: UITableViewController {
     var currentRating = 0.0
     var pickerView = UIPickerView()
     var textViewPlaceholderText: String = "Добавьте описание"
-//    var pickerView = UIPickerView()
-//    var types = ["Ресторан", "Кафе", "Путешествия", "Приключение", "Событие"]
-    var typesRealm: Results<Type>! 
-
-    
-  //  private var types: Results<Type>!
+    var typesRealm: Results<Type>!
     var types = ["Ресторан", "Кафе", "Приключения", "Путешествия", "Событие", "Добавить тип"]
 
     @IBOutlet var placeImage: UIImageView!
@@ -39,10 +34,10 @@ class NewPlaceViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        pickerView.delegate = self
-        pickerView.dataSource = self
-       
-        placeType.inputView = pickerView
+//        pickerView.delegate = self
+//        pickerView.dataSource = self
+//       
+//        placeType.inputView = pickerView
         
         typesRealm = realm.objects(Type.self)
         
