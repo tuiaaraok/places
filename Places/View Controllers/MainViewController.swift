@@ -243,9 +243,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func changeDeletedTypes() {
-//        var array: [Type] = []
-//        var placeArray: [Place] = []
-//        
+//  изменить удаленные типы
 
     }
 }
