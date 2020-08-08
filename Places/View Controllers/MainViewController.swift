@@ -38,7 +38,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         
         newPlaceVC.typesRealm = realm.objects(Type.self)
         places = realm.objects(Place.self)
-//        changeDeletedTypes()
+        changeDeletedTypes()
         
         // Setup the search controller
         searchController.searchResultsUpdater = self
@@ -241,12 +241,25 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func changeDeletedTypes() {
-      
-        for place in places {
-            if !newPlaceVC.typesRealm.contains(Type(type: place.type)) {
-                StorageManager.changeType(place, newType: "Разное")
-            }
+        var array: [Type] = []
+        var placeArray: [Place] = []
+        
+        for type in newPlaceVC.typesRealm {
+            array.append(type)
         }
+       for place in places {
+                  for type in newPlaceVC.typesRealm {
+                      if place.type == type.type {
+                        placeArray.append(place)
+                          
+                      } else {
+//                        print(place.type)
+                    }
+                    
+                  }
+              }
+
+         print(placeArray)
     }
 }
 
