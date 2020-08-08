@@ -77,6 +77,8 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
             return placesOfType[section].count
         }
         
+        
+        
          return places.count
      }
      
