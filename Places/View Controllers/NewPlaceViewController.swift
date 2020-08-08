@@ -8,7 +8,7 @@
 
 import UIKit
 import Cosmos
-import RealmSwiftes
+import RealmSwift
 import BonsaiController
  
 class NewPlaceViewController: UITableViewController {
@@ -19,7 +19,7 @@ class NewPlaceViewController: UITableViewController {
     var currentRating = 0.0
     var pickerView = UIPickerView()
     var textViewPlaceholderText: String = "Добавьте описание"
-    var pickerView = UIPickerView()
+//    var pickerView = UIPickerView()
 //    var types = ["Ресторан", "Кафе", "Путешествия", "Приключение", "Событие"]
     var typesRealm: Results<Type>! 
 
