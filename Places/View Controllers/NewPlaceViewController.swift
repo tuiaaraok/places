@@ -14,7 +14,6 @@ import BonsaiController
 class NewPlaceViewController: UITableViewController {
     
     var currentPlace: Place!
-   
     var imageIsChanged = false
     var currentRating = 0.0
     var pickerView = UIPickerView()
