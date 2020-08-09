@@ -26,19 +26,24 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         return searchController.isActive && !searchBarIsEmpty
     }
     
-    private var firstSegmentSelected: Bool {
-        return segmentedControl.selectedSegmentIndex == 0
-    }
-
     @IBOutlet var tableView: UITableView!
     @IBOutlet var reversedSortingButton: UIBarButtonItem!
     @IBOutlet var segmentedControl: UISegmentedControl!
     
+    private var firstSegmentSelected: Bool {
+        return segmentedControl.selectedSegmentIndex == 0
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         newPlaceVC.typesRealm = realm.objects(Type.self)
         places = realm.objects(Place.self)
+        
+        for type in newPlaceVC.typesRealm {
+                       sortedByTypes(type: type.type!)
+                   }
         
         // Setup the search controller
         searchController.searchResultsUpdater = self
@@ -76,8 +81,6 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         if firstSegmentSelected {
             return placesOfType[section].count
         }
-        
-        
         
          return places.count
      }
@@ -162,7 +165,9 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         
         if firstSegmentSelected {
             reversedSortingButton.image = .none
+            
             placesOfType = []
+            
             for type in newPlaceVC.typesRealm {
                 sortedByTypes(type: type.type!)
             }
@@ -242,6 +247,8 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
 }
+
+// MARK: - Searching methods
 
 extension MainViewController: UISearchResultsUpdating {
     
