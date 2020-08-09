@@ -113,11 +113,12 @@ class NewPlaceViewController: UITableViewController {
     }
 
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {
+        
         placeType.text = typesRealm.last?.type
         pickerView.reloadAllComponents()
     }
     
-       func savePlace() {
+    func savePlace() {
         
         let image = imageIsChanged ? placeImage.image : #imageLiteral(resourceName: "Шар")
         let imageData = image?.pngData()
@@ -244,8 +245,8 @@ extension NewPlaceViewController: UITextViewDelegate {
 extension NewPlaceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func chooseImagePicker(source: UIImagePickerController.SourceType) {
+        
         if UIImagePickerController.isSourceTypeAvailable(source) { // если источник выбора изобр будет достуаен
-            
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
             imagePicker.allowsEditing = true // позволит редактировать выбранное изобр, например масшаб

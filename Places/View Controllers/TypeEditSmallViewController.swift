@@ -17,11 +17,13 @@ class TypeEditSmallViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var stackView: UIStackView!
     @IBOutlet var stackViewBottomConstraint: NSLayoutConstraint!
     var newPlaceVC = NewPlaceViewController()
+    var mainVC = MainViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         newPlaceVC.typesRealm = realm.objects(Type.self)
+        mainVC.places = realm.objects(Place.self)
         addButton.isEnabled = false
         typeTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         
@@ -55,11 +57,13 @@ class TypeEditSmallViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
         textField.resignFirstResponder()
         return true
     }
 
     @objc func keyBoardWillShow(notification: Notification) {
+        
         if let userInfo = notification.userInfo as? Dictionary<String, AnyObject> {
             let frame = userInfo[UIResponder.keyboardFrameEndUserInfoKey]
             let keyBoardRect = frame?.cgRectValue
@@ -113,8 +117,15 @@ extension TypeEditSmallViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     @objc func deleteRow(_ sender: UIButton) {
+        
         let point = sender.convert(CGPoint.zero, to: tableView)
         guard let indexPath = tableView.indexPathForRow(at: point) else { return }
+        
+        for place in mainVC.places {
+            if place.type == newPlaceVC.typesRealm[indexPath.row].type {
+                StorageManager.changeType(place, newType: "Разное")
+            }
+        }
         StorageManager.deleteType(newPlaceVC.typesRealm[indexPath.row])
         tableView.reloadData()
     }

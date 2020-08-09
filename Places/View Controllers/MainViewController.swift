@@ -12,11 +12,12 @@ import RealmSwift
 class   MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     private let searchController = UISearchController(searchResultsController: nil)
-    private var places: Results<Place>!
+     var places: Results<Place>!
     private var filteredPlaces: Results<Place>!
     private var placesOfType: [[Place]] = []
     private var newPlaceVC = NewPlaceViewController()
     private var ascendingSorting = true
+    
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
         return text.isEmpty
@@ -38,7 +39,6 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         
         newPlaceVC.typesRealm = realm.objects(Type.self)
         places = realm.objects(Place.self)
-        changeDeletedTypes()
         
         // Setup the search controller
         searchController.searchResultsUpdater = self
@@ -241,15 +241,12 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
             placesOfType.append(array)
         }
     }
-    
-    func changeDeletedTypes() {
-//  изменить удаленные типы
-    }
 }
 
 extension MainViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
+        
         filterContentForSearch(searchController.searchBar.text!)
     }
     
