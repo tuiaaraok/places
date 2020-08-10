@@ -42,8 +42,8 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         places = realm.objects(Place.self)
         
         for type in newPlaceVC.typesRealm {
-                       sortedByTypes(type: type.type!)
-                   }
+            sortedByTypes(type: type.type!)
+        }
         
         // Setup the search controller
         searchController.searchResultsUpdater = self
@@ -132,33 +132,30 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
             }
             
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            
         }
         let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])
         
         return swipeActions
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if segmentedControl.selectedSegmentIndex == 0 {
-            return placesOfType[section][0].type
-        }
-        return ""
-    }
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if segmentedControl.selectedSegmentIndex == 0 {
-            let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
-            view.backgroundColor = #colorLiteral(red: 0.588359559, green: 0.8278771763, blue: 0.9216118847, alpha: 1)
-                   
-            let label = UILabel(frame: CGRect(x: 15, y: -6, width: view.frame.width, height: 40))
+        
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
+        view.backgroundColor = #colorLiteral(red: 0.588359559, green: 0.8278771763, blue: 0.9216118847, alpha: 1)
+               
+        let label = UILabel(frame: CGRect(x: 15, y: -6, width: view.frame.width, height: 40))
+        
+        label.font = UIFont(name: "Gilroy-Bold", size: 20)
+        label.textColor = .white
+        view.addSubview(label)
+        
+        if firstSegmentSelected {
             label.text = placesOfType[section][0].type
-            label.font = UIFont(name: "Gilroy-Bold", size: 20)
-            label.textColor = .white
-            view.addSubview(label)
-            return view
         } else {
-            return nil
+            label.text = "Все места"
         }
+         return view
     }
     
     @IBAction func changeSegment() {
