@@ -46,8 +46,8 @@ class NewPlaceViewController: UITableViewController {
                                                          y: 0,
                                                          width: tableView.frame.size.width,
                                                          height: 1))
-        saveButton.isEnabled = false // кнопка неактивна
-        placeName.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged) // следит а тем, заполнено ли текстовое поле или нет. в заисимости от этого блок кнопки
+        saveButton.isEnabled = false
+        placeName.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         setupEditScreen()
         
         cosmosView.settings.fillMode = .full
@@ -84,7 +84,7 @@ class NewPlaceViewController: UITableViewController {
             
             present(actionSheet, animated: true)
         } else {
-            view.endEditing(true) // убираем выделение
+            view.endEditing(true)
         }
     }
     
@@ -196,13 +196,13 @@ class NewPlaceViewController: UITableViewController {
 extension NewPlaceViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder() // скрытие по тапу на ячейку
+        textField.resignFirstResponder()
         return true
     }
     
     @objc private func textFieldChanged() {
         
-        if placeName.text?.isEmpty == false  { // если строка заполнена, кнопка активизируется
+        if placeName.text?.isEmpty == false  {
             saveButton.isEnabled = true
         } else {
             saveButton.isEnabled = false
@@ -246,18 +246,18 @@ extension NewPlaceViewController: UIImagePickerControllerDelegate, UINavigationC
     
     func chooseImagePicker(source: UIImagePickerController.SourceType) {
         
-        if UIImagePickerController.isSourceTypeAvailable(source) { // если источник выбора изобр будет достуаен
+        if UIImagePickerController.isSourceTypeAvailable(source) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
-            imagePicker.allowsEditing = true // позволит редактировать выбранное изобр, например масшаб
-            imagePicker.sourceType = source //source  тип источника для выбранного изобр
+            imagePicker.allowsEditing = true
+            imagePicker.sourceType = source
             present(imagePicker, animated: true)
         }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        placeImage.image = info[.editedImage] as? UIImage // editedImage позвол исп отредакт вариант изобр
+        placeImage.image = info[.editedImage] as? UIImage
         placeImage.contentMode = .scaleAspectFill
         placeImage.clipsToBounds = true
         
@@ -308,6 +308,7 @@ extension NewPlaceViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 }
 
 // MARK: - Bonsai Controller Delegate
+
 extension NewPlaceViewController: BonsaiControllerDelegate {
     
     // return the frame of your Bonsai View Controller
@@ -319,7 +320,6 @@ extension NewPlaceViewController: BonsaiControllerDelegate {
     // return a Bonsai Controller with SlideIn or Bubble transition animator
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
     
-
         return BonsaiController(fromDirection: .bottom, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
     }
 }

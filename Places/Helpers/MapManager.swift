@@ -17,13 +17,12 @@ class MapManager {
     private var directionsArray: [MKDirections] = []
     private var placeCoordinate: CLLocationCoordinate2D?
     
-    func setupPlacemark(place: Place, mapView: MKMapView) { // позиционирует по местоположению заведения
+    func setupPlacemark(place: Place, mapView: MKMapView) {
            
            guard let location = place.location else { return }
            
-           let geocoder = CLGeocoder() // отвечает за преобразование географ координат
-           // преобразует стринговый адрес в географический
-           geocoder.geocodeAddressString(location) { (placemarks, error) in // placemark - несколько адресов по названию заведения
+           let geocoder = CLGeocoder()
+           geocoder.geocodeAddressString(location) { (placemarks, error) in
                
                if let error = error {
                    print(error)
@@ -34,28 +33,28 @@ class MapManager {
                
                let placemark = placemarks.first
                
-               let annotation = MKPointAnnotation() // описать точку на карте
+               let annotation = MKPointAnnotation()
                annotation.title = place.name
                annotation.subtitle = place.type
                
-               guard let placemarkLocation = placemark?.location else { return } // метоположение маркера
+               guard let placemarkLocation = placemark?.location else { return }
                
                annotation.coordinate = placemarkLocation.coordinate
                self.placeCoordinate = placemarkLocation.coordinate
                
-               mapView.showAnnotations([annotation], animated: true) // чтобы на карте отоброжались все аннотации
-               mapView.selectAnnotation(annotation, animated: true) // чтобы выделить созданную аннотацию
+               mapView.showAnnotations([annotation], animated: true)
+               mapView.selectAnnotation(annotation, animated: true)
            }
        }
     
-    func checkLocationServices(mapView: MKMapView, segueIdentifier: String, closure: () -> ()) { // будем проверять включена ли служба геолокации
+    func checkLocationServices(mapView: MKMapView, segueIdentifier: String, closure: () -> ()) {
            
-           if CLLocationManager.locationServicesEnabled() { // если службы включены
+           if CLLocationManager.locationServicesEnabled() {
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             checkLocationAuthorization(mapView: mapView, segueIdentifire: segueIdentifier)
             closure()
            } else {
-               DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // позв отложить время вызова алерта секунд
+               DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                    self.showAlert(
                    title: "Ваше местоположение недоступно",
                    message: "Измените данные в настройках геолокации")
@@ -90,7 +89,7 @@ class MapManager {
     
     func showUserLocation(mapView: MKMapView) {
         
-        if let location = locationManager.location?.coordinate { // если получается определить координаты пользователя, то определяем регион для позиционирования карты
+        if let location = locationManager.location?.coordinate {
                    let region = MKCoordinateRegion(center: location,
                                                    latitudinalMeters: regionInMeters,
                                                    longitudinalMeters: regionInMeters)
@@ -100,16 +99,14 @@ class MapManager {
     
     func getdirections(for mapView: MKMapView, previousLocation: (CLLocation) -> ()) {
            
-           // определ координаты местополож пользователя
            guard let location = locationManager.location?.coordinate else {
                showAlert(title: "Error", message: "Current location is not found")
                return
            }
            
-           locationManager.startUpdatingLocation() // влючаем режим постоянного отслеживания местополож пользователя
+           locationManager.startUpdatingLocation()
            previousLocation(CLLocation(latitude: location.latitude, longitude: location.longitude))
            
-           // запрос на проклудку маршрута
            guard let request = createDirectionsRequest(for: location) else {
                showAlert(title: "Error", message: "Destination is not fount")
                return
@@ -129,12 +126,10 @@ class MapManager {
                    return
                }
                
-                // routes нужен для построения неск маршрутов
                for route in response.routes {
-                   mapView.addOverlay(route.polyline) // полилайн содержит подробную геометриювсе маршрута
-                   mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true) // фокусируем карту, чтобы путь от а до б был виден
+                   mapView.addOverlay(route.polyline)
+                   mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
                    
-                   // расстояние и время в пути
                    let distance = String(format: "%.1f", route.distance / 1000)
                    let timeInterval = route.expectedTravelTime
                    
@@ -143,8 +138,6 @@ class MapManager {
                }
            }
        }
-    
-    // настройка запроса для построения маршрута, возвращает настроенный запрос
        
     func createDirectionsRequest(for coordinate: CLLocationCoordinate2D) -> MKDirections.Request? {
            guard let destinationCoordinate = placeCoordinate else { return nil }
@@ -155,7 +148,7 @@ class MapManager {
            request.source = MKMapItem(placemark: startingLocation)
            request.destination = MKMapItem(placemark: destination)
            request.transportType = .automobile
-           request.requestsAlternateRoutes = true // позволит построить неск маршрутов
+           request.requestsAlternateRoutes = true
            
            return request
        }
@@ -164,12 +157,11 @@ class MapManager {
            
            guard let location = location else { return }
            let center = getCenterLocation(for: mapView)
-           guard center.distance(from: location) > 50 else { return } // meters
+           guard center.distance(from: location) > 50 else { return }
     
           closure(center)
        }
     
-    // метод отменяет все действующие маршруты и удаляет их с карты
     func resetMApView(withNew directions: MKDirections, mapView: MKMapView) {
            
            mapView.removeOverlays(mapView.overlays)
@@ -178,7 +170,7 @@ class MapManager {
            directionsArray.removeAll()
        }
        
-    func getCenterLocation(for mapView: MKMapView) -> CLLocation { // возвращает текущ координаты центральной точки
+    func getCenterLocation(for mapView: MKMapView) -> CLLocation { 
         
         let latitude = mapView.centerCoordinate.latitude
         let longitude = mapView.centerCoordinate.longitude

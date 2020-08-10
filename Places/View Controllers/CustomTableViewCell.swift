@@ -22,7 +22,7 @@ class CustomTableViewCell: UITableViewCell {
     @IBOutlet var typeLabel: UILabel!
     @IBOutlet var cosmosView: CosmosView! {
         didSet {
-            cosmosView.settings.updateOnTouch = false // закрываем доступ к изменению рейтинга через список
+            cosmosView.settings.updateOnTouch = false 
         }
     }
 }

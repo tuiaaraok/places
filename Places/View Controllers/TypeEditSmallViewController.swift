@@ -86,7 +86,7 @@ class TypeEditSmallViewController: UIViewController, UITextFieldDelegate {
     
     @objc private func textFieldChanged() {
            
-           if typeTextField.text?.isEmpty == false  { // если строка заполнена, кнопка активизируется
+           if typeTextField.text?.isEmpty == false  { 
                addButton.isEnabled = true
            } else {
                addButton.isEnabled = false

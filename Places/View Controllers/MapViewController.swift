@@ -91,16 +91,15 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MKMapViewDelegate {
     
-    //метод делает баннер по аннотации
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        guard !(annotation is MKUserLocation) else { return nil } //если маркер это местоположение пользователя, то выходим
-        
+        guard !(annotation is MKUserLocation) else { return nil }
+
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) as? MKPinAnnotationView
         
         if annotationView == nil {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
-            annotationView?.canShowCallout = true // отобразить аннотацию в виде баннера
+            annotationView?.canShowCallout = true
         }
         
         if let imageData = place.imageData {
@@ -115,7 +114,7 @@ extension MapViewController: MKMapViewDelegate {
         return annotationView
     }
     
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) { // вызывается каждый раз при смене отображаемого региона
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
         let center = mapManager.getCenterLocation(for: mapView)
         let geocoder = CLGeocoder()
@@ -128,7 +127,6 @@ extension MapViewController: MKMapViewDelegate {
         
         geocoder.cancelGeocode()
         
-        // должны преобразовать геогр данные в строку
         geocoder.reverseGeocodeLocation(center) { (placemarks, error) in
             
             if let error = error {
@@ -155,7 +153,6 @@ extension MapViewController: MKMapViewDelegate {
         }
     }
     
-    // настраиваем линию маршрута
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         
         let renderer = MKPolygonRenderer(overlay: overlay as! MKPolyline)
@@ -166,7 +163,7 @@ extension MapViewController: MKMapViewDelegate {
 
 extension MapViewController: CLLocationManagerDelegate {
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) { // вызывается при каждом изм статуса авторизации для исп служб геолокации
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) { 
         mapManager.checkLocationAuthorization(mapView: mapView, segueIdentifire: incomeSegueIdentifier)
     }
 }

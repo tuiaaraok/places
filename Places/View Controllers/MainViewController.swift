@@ -47,7 +47,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         
         // Setup the search controller
         searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false // позволит взаимодействоавть с измененным вью контроллером как с основным
+        searchController.obscuresBackgroundDuringPresentation = false 
         searchController.searchBar.placeholder = "Поиск"
         
         tableView.rowHeight = 85
@@ -58,7 +58,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
         
         navigationItem.searchController = searchController
-        definesPresentationContext = true // позволяет отпустить строку поиска при переходе на др экран
+        definesPresentationContext = true
     }
     
     // MARK: - Table view data sourse
@@ -110,7 +110,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
      // MARK: - Table view delegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true) // отменяем выделение ячейки
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -221,8 +221,8 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     
     private func sorting() {
         
-        if segmentedControl.selectedSegmentIndex == 1 { // если нулевой сегмент
-            places = places.sorted(byKeyPath: "date", ascending: ascendingSorting) // в завис от того, какое знач имеет свойство, сортировка будет  другой
+        if segmentedControl.selectedSegmentIndex == 1 {
+            places = places.sorted(byKeyPath: "date", ascending: ascendingSorting)
         } else if segmentedControl.selectedSegmentIndex == 2 {
             places = places.sorted(byKeyPath: "name", ascending: ascendingSorting)
         }
@@ -253,8 +253,6 @@ extension MainViewController: UISearchResultsUpdating {
         
         filterContentForSearch(searchController.searchBar.text!)
     }
-    
-    // занимается фильтрацией ы соответствии с поиск запросом
     
     private func filterContentForSearch(_ searchText: String) {
         

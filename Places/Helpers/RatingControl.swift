@@ -8,7 +8,7 @@
 
 import UIKit
 
-@IBDesignable class RatingControl: UIStackView { // отображает програмные элементы в сториборд
+@IBDesignable class RatingControl: UIStackView { 
     
     // MARK: - Properties
     
@@ -47,7 +47,7 @@ import UIKit
     
     @objc func ratingButtonTapped(button: UIButton) {
         
-        guard let index = ratingButtons.firstIndex(of: button) else {return} // индекс первой нажатой кнопки
+        guard let index = ratingButtons.firstIndex(of: button) else {return}
         
         // calculate the rating of the selected button
         let selectedRaiting = index + 1
