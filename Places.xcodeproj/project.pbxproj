@@ -10,6 +10,8 @@
 		6301A5C624CA013C009AEC72 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6301A5C524CA013C009AEC72 /* RatingControl.swift */; };
 		6301A5C824CB1EFF009AEC72 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6301A5C724CB1EFF009AEC72 /* MapViewController.swift */; };
 		6301A5CA24D07158009AEC72 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6301A5C924D07158009AEC72 /* MapManager.swift */; };
+		630EEF7F24E8559B0086BA2F /* BonsaiExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630EEF7E24E8559B0086BA2F /* BonsaiExtention.swift */; };
+		630EEF8124E8563B0086BA2F /* Extention NewPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630EEF8024E8563B0086BA2F /* Extention NewPlaceViewController.swift */; };
 		63A60ACF24D445E30008EDE5 /* TypeEditSmallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A60ACE24D445E30008EDE5 /* TypeEditSmallViewController.swift */; };
 		63A60AD124D45D530008EDE5 /* TypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A60AD024D45D530008EDE5 /* TypeTableViewCell.swift */; };
 		63C01F6324C828B00053A104 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C01F6224C828B00053A104 /* AppDelegate.swift */; };
@@ -36,6 +38,8 @@
 		6301A5C524CA013C009AEC72 /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		6301A5C724CB1EFF009AEC72 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		6301A5C924D07158009AEC72 /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
+		630EEF7E24E8559B0086BA2F /* BonsaiExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonsaiExtention.swift; sourceTree = "<group>"; };
+		630EEF8024E8563B0086BA2F /* Extention NewPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extention NewPlaceViewController.swift"; sourceTree = "<group>"; };
 		63A60ACE24D445E30008EDE5 /* TypeEditSmallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeEditSmallViewController.swift; sourceTree = "<group>"; };
 		63A60AD024D45D530008EDE5 /* TypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeTableViewCell.swift; sourceTree = "<group>"; };
 		63C01F5F24C828B00053A104 /* Places.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Places.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +87,7 @@
 				63C01F7F24C837F60053A104 /* CustomTableViewCell.swift */,
 				63A60ACE24D445E30008EDE5 /* TypeEditSmallViewController.swift */,
 				63A60AD024D45D530008EDE5 /* TypeTableViewCell.swift */,
+				630EEF8224E85A050086BA2F /* Extentions */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -123,6 +128,15 @@
 				63C01F6824C828B00053A104 /* Main.storyboard */,
 			);
 			path = IBuilder;
+			sourceTree = "<group>";
+		};
+		630EEF8224E85A050086BA2F /* Extentions */ = {
+			isa = PBXGroup;
+			children = (
+				630EEF8024E8563B0086BA2F /* Extention NewPlaceViewController.swift */,
+				630EEF7E24E8559B0086BA2F /* BonsaiExtention.swift */,
+			);
+			path = Extentions;
 			sourceTree = "<group>";
 		};
 		63C01F5624C828B00053A104 = {
@@ -316,6 +330,8 @@
 				6301A5C824CB1EFF009AEC72 /* MapViewController.swift in Sources */,
 				6301A5C624CA013C009AEC72 /* RatingControl.swift in Sources */,
 				63A60ACF24D445E30008EDE5 /* TypeEditSmallViewController.swift in Sources */,
+				630EEF8124E8563B0086BA2F /* Extention NewPlaceViewController.swift in Sources */,
+				630EEF7F24E8559B0086BA2F /* BonsaiExtention.swift in Sources */,
 				63A60AD124D45D530008EDE5 /* TypeTableViewCell.swift in Sources */,
 				6301A5CA24D07158009AEC72 /* MapManager.swift in Sources */,
 				63C01F8224C83B760053A104 /* PlaceModel.swift in Sources */,

@@ -13,9 +13,9 @@ class TypeEditSmallViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var typeTextField: UITextField!
     @IBOutlet var addButton: UIButton!
-    
     @IBOutlet var stackView: UIStackView!
     @IBOutlet var stackViewBottomConstraint: NSLayoutConstraint!
+    
     var newPlaceVC = NewPlaceViewController()
     var mainVC = MainViewController()
     

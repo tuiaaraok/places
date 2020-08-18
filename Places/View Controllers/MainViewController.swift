@@ -11,8 +11,8 @@ import RealmSwift
 
 class   MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    var places: Results<Place>!
     private let searchController = UISearchController(searchResultsController: nil)
-     var places: Results<Place>!
     private var filteredPlaces: Results<Place>!
     private var placesOfType: [[Place]] = []
     private var newPlaceVC = NewPlaceViewController()
@@ -37,7 +37,6 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         newPlaceVC.typesRealm = realm.objects(Type.self)
         places = realm.objects(Place.self)
         
@@ -45,20 +44,10 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
             sortedByTypes(type: type.type!)
         }
         
-        // Setup the search controller
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false 
-        searchController.searchBar.placeholder = "Поиск"
+        setupSearchController()
+        setupSegmentedControl()
         
         tableView.rowHeight = 85
-      
-        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(red: 0.588359559, green: 0.8278771763, blue: 0.9216118847, alpha: 1)]
-        let titleTextAttributes2 = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        segmentedControl.setTitleTextAttributes(titleTextAttributes2, for: .normal)
-        segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
-        
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
     }
     
     // MARK: - Table view data sourse
@@ -87,23 +76,8 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
      
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
-
-        let place: Place
         
-        if isFiltering {
-            place = filteredPlaces[indexPath.row]
-        } else  if firstSegmentSelected {
-            place = placesOfType[indexPath.section][indexPath.row]
-        } else {
-            place = places[indexPath.row]
-        }
-        
-        cell.nameLabel?.text = place.name
-        cell.locationLabel.text = place.location
-        cell.typeLabel.text = place.type
-        cell.mainImage.image = UIImage(data: place.imageData!)
-        cell.cosmosView.rating = place.rating
-
+        setupTableviewCell(cell: cell, indexPath: indexPath)
         return cell
      }
     
@@ -158,6 +132,24 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
          return view
     }
     
+    func setupTableviewCell(cell: CustomTableViewCell, indexPath: IndexPath) {
+        
+        let place: Place
+        if isFiltering {
+            place = filteredPlaces[indexPath.row]
+        } else  if firstSegmentSelected {
+            place = placesOfType[indexPath.section][indexPath.row]
+        } else {
+            place = places[indexPath.row]
+        }
+        
+        cell.nameLabel?.text = place.name
+        cell.locationLabel.text = place.location
+        cell.typeLabel.text = place.type
+        cell.mainImage.image = UIImage(data: place.imageData!)
+        cell.cosmosView.rating = place.rating
+       }
+    
     @IBAction func changeSegment() {
         
         if firstSegmentSelected {
@@ -197,25 +189,20 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         
         guard let newPlaceVC = segue.source as? NewPlaceViewController else { return }
         newPlaceVC.savePlace()
-    
         changeSegment()
-       
         tableView.reloadData()
     }
     
     // MARK: - Sorting methods
     
     @IBAction func sortSelection(_ sender: UISegmentedControl) {
-        
        sorting()
         }
     
     @IBAction func reversedSorting(_ sender: Any) {
         
         ascendingSorting.toggle()
-        
         reversedSortingButton.image = ascendingSorting ? #imageLiteral(resourceName: "AZ") : #imageLiteral(resourceName: "ZA")
-        
         sorting()
     }
     
@@ -231,7 +218,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     private func sortedByTypes(type: String) {
-        
+     
         var array: [Place] = []
         
         for place in places {
@@ -243,22 +230,35 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
             placesOfType.append(array)
         }
     }
+    
+    private func setupSegmentedControl() {
+        
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(red: 0.588359559, green: 0.8278771763, blue: 0.9216118847, alpha: 1)]
+        let titleTextAttributes2 = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        segmentedControl.setTitleTextAttributes(titleTextAttributes2, for: .normal)
+        segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
+    }
 }
 
-// MARK: - Searching methods
+// MARK: - Searching settings
 
 extension MainViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        
         filterContentForSearch(searchController.searchBar.text!)
     }
     
     private func filterContentForSearch(_ searchText: String) {
-        
         filteredPlaces = places.filter("name CONTAINS[c] %@ OR location CONTAINS[c] %@", searchText, searchText)
-        
         tableView.reloadData()
+    }
+    
+    private func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Поиск"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
 }
 

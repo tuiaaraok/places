@@ -19,7 +19,7 @@ class NewPlaceViewController: UITableViewController {
     var pickerView = UIPickerView()
     var textViewPlaceholderText: String = "Добавьте описание"
     var typesRealm: Results<Type>!
-    var types = ["Ресторан", "Кафе", "Приключения", "Путешествия", "Событие", "Добавить тип"]
+    var types = ["Ресторан", "Кафе", "Приключения", "Путешествия", "Событие"]
 
     @IBOutlet var placeImage: UIImageView!
     @IBOutlet var saveButton: UIBarButtonItem!
@@ -35,26 +35,22 @@ class NewPlaceViewController: UITableViewController {
         
         typesRealm = realm.objects(Type.self)
         
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        placeType.inputView = pickerView
-        pickerView.backgroundColor = #colorLiteral(red: 0.6277194619, green: 0.8501312137, blue: 0.9382870197, alpha: 1)
-        
-        setupTextView()
-        
         tableView.tableFooterView = UIView(frame: CGRect(x: 0,
                                                          y: 0,
                                                          width: tableView.frame.size.width,
                                                          height: 1))
         saveButton.isEnabled = false
         placeName.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
-        setupEditScreen()
-        
+      
         cosmosView.settings.fillMode = .full
         cosmosView.didTouchCosmos = { rating in
             self.currentRating = rating
         }
+        
+        setupTextView()
+        setupEditScreen()
         setupNavigationBarItem()
+        setupPickerView()
     }
        
     // MARK: - Table view delegate
@@ -62,27 +58,7 @@ class NewPlaceViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.row == 0 {
-            
-            let actionSheet = UIAlertController(
-                title: nil,
-                message: nil,
-                preferredStyle: .actionSheet)
-            
-            let camera = UIAlertAction(title: "Камера", style: .default) { (_) in
-                self.chooseImagePicker(source: .camera)
-            }
-            
-            let photo = UIAlertAction(title: "Галерея", style: .default) { (_) in
-                self.chooseImagePicker(source: .photoLibrary)
-            }
-            
-            let cancel = UIAlertAction(title: "Отмена", style: .cancel)
-            
-            actionSheet.addAction(camera)
-            actionSheet.addAction(photo)
-            actionSheet.addAction(cancel)
-            
-            present(actionSheet, animated: true)
+            showActionSheet()
         } else {
             view.endEditing(true)
         }
@@ -160,25 +136,6 @@ class NewPlaceViewController: UITableViewController {
         }
     }
     
-    private func setupNavigationBar() {
-        if let topItem = navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "",
-                                                        style: .plain,
-                                                        target: nil,
-                                                        action: nil)
-        }
-        navigationItem.leftBarButtonItem = nil
-        title = currentPlace?.name
-        saveButton.isEnabled = true
-    }
-    
-    private func setupNavigationBarItem() {
-        
-        navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
-        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .normal)
-        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Gilroy-Medium", size: 17)!], for: .disabled)
-    }
-    
     @IBAction func chooseType() {
         
         if placeType.placeholder == textViewPlaceholderText {
@@ -188,138 +145,5 @@ class NewPlaceViewController: UITableViewController {
     
     @IBAction func cancelAction(_ sender: Any) {
         dismiss(animated: true)
-    }
-}
-
-// MARK: - Text field delegate
-
-extension NewPlaceViewController: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    @objc private func textFieldChanged() {
-        
-        if placeName.text?.isEmpty == false  {
-            saveButton.isEnabled = true
-        } else {
-            saveButton.isEnabled = false
-        }
-    }
-}
-
-// MARK: - Text view delegate
-
-extension NewPlaceViewController: UITextViewDelegate {
-   func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-          if text == "\n" {
-              textView.resignFirstResponder()
-              return false
-          }
-          return true
-   }
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == textViewPlaceholderText {
-            textView.text = ""
-            textView.textColor = .black
-        } else if !textView.text.isEmpty {
-             textView.textColor = .lightGray
-        }
-    }
-    
-    private func setupTextView() {
-        
-        placeDescription.delegate = self
-        placeDescription.text = textViewPlaceholderText
-        placeDescription.textColor = .lightGray
-        placeDescription.font = UIFont(name: "Gilroy-Medium", size: 17)
-        placeDescription.returnKeyType = .done
-    }
-}
-
-// MARK: - Work with image
-
-extension NewPlaceViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func chooseImagePicker(source: UIImagePickerController.SourceType) {
-        
-        if UIImagePickerController.isSourceTypeAvailable(source) {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.allowsEditing = true
-            imagePicker.sourceType = source
-            present(imagePicker, animated: true)
-        }
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        placeImage.image = info[.editedImage] as? UIImage
-        placeImage.contentMode = .scaleAspectFill
-        placeImage.clipsToBounds = true
-        
-        imageIsChanged = true
-        dismiss(animated: true)
-    }
-}
-
-extension NewPlaceViewController: MapViewControllerDelegate {
-    func getaddress(_ address: String?) {
-        placeLocation.text = address
-    }
-}
-
-// MARK: - UIPickerViewDataSource
-
-extension NewPlaceViewController: UIPickerViewDelegate, UIPickerViewDataSource {
- 
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        typesRealm.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return typesRealm[row].type
-    }
-    
-// MARK: - UIPickerViewDelegate
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        placeType.text = typesRealm[row].type
-        placeType.resignFirstResponder()
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        let title = UILabel()
-            title.font = UIFont(name: "Gilroy-Bold", size: 22)
-            title.textColor = UIColor.white
-        title.text =  typesRealm[row].type
-            title.textAlignment = .center
-
-        return title
-    }
-}
-
-// MARK: - Bonsai Controller Delegate
-
-extension NewPlaceViewController: BonsaiControllerDelegate {
-    
-    // return the frame of your Bonsai View Controller
-    func frameOfPresentedView(in containerViewFrame: CGRect) -> CGRect {
-        
-        return CGRect(origin: CGPoint(x: 0, y: containerViewFrame.height / 2), size: CGSize(width: containerViewFrame.width, height: containerViewFrame.height / (2)))
-    }
-    
-    // return a Bonsai Controller with SlideIn or Bubble transition animator
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-    
-        return BonsaiController(fromDirection: .bottom, backgroundColor: UIColor(white: 0, alpha: 0.5), presentedViewController: presented, delegate: self)
     }
 }
