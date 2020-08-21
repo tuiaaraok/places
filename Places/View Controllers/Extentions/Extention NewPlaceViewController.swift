@@ -142,10 +142,10 @@ extension NewPlaceViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func setupPickerView() {
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        pickerView.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
-        placeType.inputView = pickerView
+        typePickerView.delegate = self
+        typePickerView.dataSource = self
+        typePickerView.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+        placeType.inputView = typePickerView
     }
 }
 

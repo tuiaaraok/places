@@ -25,4 +25,13 @@ class CustomTableViewCell: UITableViewCell {
             cosmosView.settings.updateOnTouch = false 
         }
     }
+    
+    func configureCell( _ indexPath: IndexPath, place: Place) {
+           
+           nameLabel?.text = place.name
+           locationLabel.text = place.location
+           typeLabel.text = place.type
+           mainImage.image = UIImage(data: place.imageData!)
+           cosmosView.rating = place.rating
+          }
 }

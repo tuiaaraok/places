@@ -16,10 +16,11 @@ class NewPlaceViewController: UITableViewController {
     var currentPlace: Place!
     var imageIsChanged = false
     var currentRating = 0.0
-    var pickerView = UIPickerView()
+    var typePickerView = UIPickerView()
     var textViewPlaceholderText: String = "Добавьте описание"
     var typesRealm: Results<Type>!
     var types = ["Ресторан", "Кафе", "Приключения", "Путешествия", "Событие"]
+
 
     @IBOutlet var placeImage: UIImageView!
     @IBOutlet var saveButton: UIBarButtonItem!
@@ -91,21 +92,21 @@ class NewPlaceViewController: UITableViewController {
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {
         
         placeType.text = typesRealm.last?.type
-        pickerView.reloadAllComponents()
+        typePickerView.reloadAllComponents()
     }
     
     func savePlace() {
-        
+
         let image = imageIsChanged ? placeImage.image : #imageLiteral(resourceName: "Шар")
         let imageData = image?.pngData()
-           
+
         let newPlace = Place(name: placeName.text!,
                             location: placeLocation.text,
                             type: placeType.text!.isEmpty ? "Разное" : placeType.text,
                             imageData: imageData,
                             rating: currentRating,
                             placeDescription: placeDescription.text)
-           
+
         if currentPlace != nil {
             try! realm.write {
                 currentPlace?.name = newPlace.name
@@ -139,7 +140,7 @@ class NewPlaceViewController: UITableViewController {
     @IBAction func chooseType() {
         
         if placeType.placeholder == textViewPlaceholderText {
-            placeType.willRemoveSubview(pickerView)
+            placeType.willRemoveSubview(typePickerView)
         }
     }
     

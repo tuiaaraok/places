@@ -12,12 +12,13 @@ import RealmSwift
 class   MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var places: Results<Place>!
+    var ascendingSorting = true
+    var placesOfType: [[Place]] = []
+    
     private let searchController = UISearchController(searchResultsController: nil)
     private var filteredPlaces: Results<Place>!
-    private var placesOfType: [[Place]] = []
     private var newPlaceVC = NewPlaceViewController()
-    private var ascendingSorting = true
-    
+    private var sortingManager = SortingManager()
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
         return text.isEmpty
@@ -26,13 +27,14 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         return searchController.isActive && !searchBarIsEmpty
     }
     
-    @IBOutlet var tableView: UITableView!
-    @IBOutlet var reversedSortingButton: UIBarButtonItem!
-    @IBOutlet var segmentedControl: UISegmentedControl!
-    
     private var firstSegmentSelected: Bool {
         return segmentedControl.selectedSegmentIndex == 0
     }
+    
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var reversedSortingButton: UIBarButtonItem!
+    @IBOutlet var segmentedControl: UISegmentedControl!
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +43,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         places = realm.objects(Place.self)
         
         for type in newPlaceVC.typesRealm {
-            sortedByTypes(type: type.type!)
+            placesOfType += sortingManager.sortedByTypes(type: type.type!, places)
         }
         
         setupSearchController()
@@ -70,14 +72,14 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         if firstSegmentSelected {
             return placesOfType[section].count
         }
-        
          return places.count
      }
      
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CustomTableViewCell
         
-        setupTableviewCell(cell: cell, indexPath: indexPath)
+        cell.configureCell(indexPath, place: getPlaceForCell(indexPath))
         return cell
      }
     
@@ -95,22 +97,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
             place = placesOfType[indexPath.section][indexPath.row]
         }
         
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
-            StorageManager.deleteObject(place)
-            
-            let section = indexPath.section
-            let row = indexPath.row
-            
-            if self.firstSegmentSelected {
-                self.placesOfType[section].remove(at: row)
-            }
-            
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            
-        }
-        let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])
-        
-        return swipeActions
+        return createSwipeDeleteAction(indexPath, place, tableView)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -132,24 +119,6 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
          return view
     }
     
-    func setupTableviewCell(cell: CustomTableViewCell, indexPath: IndexPath) {
-        
-        let place: Place
-        if isFiltering {
-            place = filteredPlaces[indexPath.row]
-        } else  if firstSegmentSelected {
-            place = placesOfType[indexPath.section][indexPath.row]
-        } else {
-            place = places[indexPath.row]
-        }
-        
-        cell.nameLabel?.text = place.name
-        cell.locationLabel.text = place.location
-        cell.typeLabel.text = place.type
-        cell.mainImage.image = UIImage(data: place.imageData!)
-        cell.cosmosView.rating = place.rating
-       }
-    
     @IBAction func changeSegment() {
         
         if firstSegmentSelected {
@@ -158,7 +127,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
             placesOfType = []
             
             for type in newPlaceVC.typesRealm {
-                sortedByTypes(type: type.type!)
+                placesOfType += sortingManager.sortedByTypes(type: type.type!, places)
             }
         } else {
             reversedSortingButton.image = ascendingSorting ? #imageLiteral(resourceName: "AZ") : #imageLiteral(resourceName: "ZA")
@@ -193,42 +162,19 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.reloadData()
     }
     
-    // MARK: - Sorting methods
+    // MARK: - Sorting IBActions
     
     @IBAction func sortSelection(_ sender: UISegmentedControl) {
-       sorting()
+        places = sortingManager.sorting(places, segmentedControl.selectedSegmentIndex, ascendingSorting)
+        tableView.reloadData()
         }
     
     @IBAction func reversedSorting(_ sender: Any) {
         
         ascendingSorting.toggle()
         reversedSortingButton.image = ascendingSorting ? #imageLiteral(resourceName: "AZ") : #imageLiteral(resourceName: "ZA")
-        sorting()
-    }
-    
-    private func sorting() {
-        
-        if segmentedControl.selectedSegmentIndex == 1 {
-            places = places.sorted(byKeyPath: "date", ascending: ascendingSorting)
-        } else if segmentedControl.selectedSegmentIndex == 2 {
-            places = places.sorted(byKeyPath: "name", ascending: ascendingSorting)
-        }
-        
+        places = sortingManager.sorting(places, segmentedControl.selectedSegmentIndex, ascendingSorting)
         tableView.reloadData()
-    }
-    
-    private func sortedByTypes(type: String) {
-     
-        var array: [Place] = []
-        
-        for place in places {
-            if place.type == type {
-                array.append(place)
-            }
-        }
-        if array.count > 0 {
-            placesOfType.append(array)
-        }
     }
     
     private func setupSegmentedControl() {
@@ -239,6 +185,8 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
     }
 }
+
+// MARK: - Extentions
 
 // MARK: - Searching settings
 
@@ -262,3 +210,40 @@ extension MainViewController: UISearchResultsUpdating {
     }
 }
 
+// MARK: - Extention. Setup table view cell and swipe delete action
+
+extension MainViewController {
+    
+    func createSwipeDeleteAction(_ indexPath: IndexPath, _ place: Place, _ tableView: UITableView) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
+            StorageManager.deleteObject(place)
+            
+            let section = indexPath.section
+            let row = indexPath.row
+            
+            if self.firstSegmentSelected {
+                self.placesOfType[section].remove(at: row)
+            }
+            
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+        }
+        let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])
+        return swipeActions
+    }
+    
+    func getPlaceForCell( _ indexPath: IndexPath) -> Place{
+     
+     let place: Place
+     if isFiltering {
+         place = filteredPlaces[indexPath.row]
+     } else  if firstSegmentSelected {
+         place = placesOfType[indexPath.section][indexPath.row]
+     } else {
+         place = places[indexPath.row]
+     }
+     return place
+    }
+
+    
+}
