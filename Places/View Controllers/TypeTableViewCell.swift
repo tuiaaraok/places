@@ -11,4 +11,9 @@ import UIKit
 class TypeTableViewCell: UITableViewCell {
 
     @IBOutlet var deleteButton: UIButton!
+    
+    func configure(type: String) {
+        textLabel?.text = type
+        textLabel?.font = UIFont(name: "Gilroy-Medium", size: 17)
+    }
 }

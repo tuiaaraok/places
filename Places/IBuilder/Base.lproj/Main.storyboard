@@ -47,19 +47,19 @@
                                                     <rect key="frame" x="98" y="8" width="205" height="69"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Название" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2B-RQ-Mlo">
-                                                            <rect key="frame" x="0.0" y="0.0" width="81.5" height="23.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="83" height="23.5"/>
                                                             <fontDescription key="fontDescription" name="Gilroy-SemiBold" family="Gilroy" pointSize="18"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Местоположение" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lWP-e1-Q4H">
-                                                            <rect key="frame" x="0.0" y="27.5" width="115.5" height="18"/>
+                                                            <rect key="frame" x="0.0" y="27.5" width="115" height="18.5"/>
                                                             <fontDescription key="fontDescription" name="Gilroy-Light" family="Gilroy" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Тип" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TIf-py-fWK">
-                                                            <rect key="frame" x="0.0" y="49.5" width="24" height="19.5"/>
+                                                            <rect key="frame" x="0.0" y="50" width="22.5" height="19"/>
                                                             <fontDescription key="fontDescription" name="Gilroy-Light" family="Gilroy" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -589,6 +589,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Yg7-ad-nUh" id="bUd-gi-xwR"/>
+                                    <outlet property="delegate" destination="Yg7-ad-nUh" id="Dvm-4y-rNg"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

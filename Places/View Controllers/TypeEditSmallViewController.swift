@@ -26,10 +26,6 @@ class TypeEditSmallViewController: UIViewController, UITextFieldDelegate {
         mainVC.places = realm.objects(Place.self)
         addButton.isEnabled = false
         typeTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
         typeTextField.delegate = self
         
         // Do any additional setup after loading the view, typically from a nib.
@@ -106,8 +102,9 @@ extension TypeEditSmallViewController: UITableViewDelegate, UITableViewDataSourc
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "typeCell", for: indexPath) as! TypeTableViewCell
         
-        cell.textLabel?.text = newPlaceVC.typesRealm[indexPath.row].type
-        cell.textLabel?.font = UIFont(name: "Gilroy-Medium", size: 17)
+//        cell.textLabel?.text = newPlaceVC.typesRealm[indexPath.row].type
+//        cell.textLabel?.font = UIFont(name: "Gilroy-Medium", size: 17)
+        cell.configure(type: newPlaceVC.typesRealm[indexPath.row].type!)
         
         if let deleteButton = cell.deleteButton {
             deleteButton.addTarget(self, action: #selector(deleteRow(_ :)), for: .touchUpInside)

@@ -103,19 +103,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
-        view.backgroundColor = #colorLiteral(red: 0.588359559, green: 0.8278771763, blue: 0.9216118847, alpha: 1)
-               
-        let label = UILabel(frame: CGRect(x: 15, y: -6, width: view.frame.width, height: 40))
-        
-        label.font = UIFont(name: "Gilroy-Bold", size: 20)
-        label.textColor = .white
-        view.addSubview(label)
-        
-        if firstSegmentSelected {
-            label.text = placesOfType[section][0].type
-        } else {
-            label.text = "Все места"
-        }
+        setupViewForHeaderInSection(view, section)
          return view
     }
     
@@ -123,7 +111,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         
         if firstSegmentSelected {
             reversedSortingButton.image = .none
-            
+
             placesOfType = []
             
             for type in newPlaceVC.typesRealm {
@@ -186,8 +174,6 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     }
 }
 
-// MARK: - Extentions
-
 // MARK: - Searching settings
 
 extension MainViewController: UISearchResultsUpdating {
@@ -210,11 +196,11 @@ extension MainViewController: UISearchResultsUpdating {
     }
 }
 
-// MARK: - Extention. Setup table view cell and swipe delete action
+// MARK: - Setup table view cell and swipe delete action
 
 extension MainViewController {
     
-    func createSwipeDeleteAction(_ indexPath: IndexPath, _ place: Place, _ tableView: UITableView) -> UISwipeActionsConfiguration? {
+    private func createSwipeDeleteAction(_ indexPath: IndexPath, _ place: Place, _ tableView: UITableView) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
             StorageManager.deleteObject(place)
             
@@ -232,7 +218,7 @@ extension MainViewController {
         return swipeActions
     }
     
-    func getPlaceForCell( _ indexPath: IndexPath) -> Place{
+    private func getPlaceForCell( _ indexPath: IndexPath) -> Place{
      
      let place: Place
      if isFiltering {
@@ -244,6 +230,19 @@ extension MainViewController {
      }
      return place
     }
-
     
+    private func setupViewForHeaderInSection(_ view: UIView, _ section: Int) {
+           view.backgroundColor = #colorLiteral(red: 0.588359559, green: 0.8278771763, blue: 0.9216118847, alpha: 1)
+           let label = UILabel(frame: CGRect(x: 15, y: -6, width: view.frame.width, height: 40))
+                  
+           label.font = UIFont(name: "Gilroy-Bold", size: 20)
+           label.textColor = .white
+           view.addSubview(label)
+                  
+           if firstSegmentSelected {
+               label.text = placesOfType[section][0].type
+           } else {
+               label.text = "Все места"
+           }
+       }
 }
