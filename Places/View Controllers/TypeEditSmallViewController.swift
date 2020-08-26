@@ -47,7 +47,6 @@ class TypeEditSmallViewController: UIViewController, UITextFieldDelegate {
         
         guard let newType = typeTextField.text else { return }
         StorageManager.saveType(Type(type: newType))
-        typeTextField.text = ""
         
         tableView.reloadData()
     }
@@ -101,9 +100,7 @@ extension TypeEditSmallViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "typeCell", for: indexPath) as! TypeTableViewCell
-        
-//        cell.textLabel?.text = newPlaceVC.typesRealm[indexPath.row].type
-//        cell.textLabel?.font = UIFont(name: "Gilroy-Medium", size: 17)
+
         cell.configure(type: newPlaceVC.typesRealm[indexPath.row].type!)
         
         if let deleteButton = cell.deleteButton {

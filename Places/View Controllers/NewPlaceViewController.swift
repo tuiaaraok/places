@@ -91,7 +91,9 @@ class NewPlaceViewController: UITableViewController {
 
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {
         
-        placeType.text = typesRealm.last?.type
+        guard let newPlaceVC = segue.source as? TypeEditSmallViewController else { return }
+        placeType.text = newPlaceVC.typeTextField.text!
+
         typePickerView.reloadAllComponents()
     }
     

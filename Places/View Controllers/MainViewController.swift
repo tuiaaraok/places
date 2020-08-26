@@ -12,22 +12,22 @@ import RealmSwift
 class   MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var places: Results<Place>!
+    var filteredPlaces: Results<Place>!
     var ascendingSorting = true
     var placesOfType: [[Place]] = []
-    
-    private let searchController = UISearchController(searchResultsController: nil)
-    private var filteredPlaces: Results<Place>!
+    let searchController = UISearchController(searchResultsController: nil)
+   
     private var newPlaceVC = NewPlaceViewController()
     private var sortingManager = SortingManager()
     private var searchBarIsEmpty: Bool {
         guard let text = searchController.searchBar.text else { return false }
         return text.isEmpty
     }
-    private var isFiltering: Bool {
+    var isFiltering: Bool {
         return searchController.isActive && !searchBarIsEmpty
     }
     
-    private var firstSegmentSelected: Bool {
+    var firstSegmentSelected: Bool {
         return segmentedControl.selectedSegmentIndex == 0
     }
     
@@ -125,6 +125,7 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if segue.identifier == "detail" {
             guard let indexPath = tableView.indexPathForSelectedRow else {return}
             
@@ -164,85 +165,4 @@ class   MainViewController: UIViewController, UITableViewDataSource, UITableView
         places = sortingManager.sorting(places, segmentedControl.selectedSegmentIndex, ascendingSorting)
         tableView.reloadData()
     }
-    
-    private func setupSegmentedControl() {
-        
-        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(red: 0.588359559, green: 0.8278771763, blue: 0.9216118847, alpha: 1)]
-        let titleTextAttributes2 = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        segmentedControl.setTitleTextAttributes(titleTextAttributes2, for: .normal)
-        segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
-    }
-}
-
-// MARK: - Searching settings
-
-extension MainViewController: UISearchResultsUpdating {
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearch(searchController.searchBar.text!)
-    }
-    
-    private func filterContentForSearch(_ searchText: String) {
-        filteredPlaces = places.filter("name CONTAINS[c] %@ OR location CONTAINS[c] %@", searchText, searchText)
-        tableView.reloadData()
-    }
-    
-    private func setupSearchController() {
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Поиск"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
-    }
-}
-
-// MARK: - Setup table view cell and swipe delete action
-
-extension MainViewController {
-    
-    private func createSwipeDeleteAction(_ indexPath: IndexPath, _ place: Place, _ tableView: UITableView) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
-            StorageManager.deleteObject(place)
-            
-            let section = indexPath.section
-            let row = indexPath.row
-            
-            if self.firstSegmentSelected {
-                self.placesOfType[section].remove(at: row)
-            }
-            
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            
-        }
-        let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction])
-        return swipeActions
-    }
-    
-    private func getPlaceForCell( _ indexPath: IndexPath) -> Place{
-     
-     let place: Place
-     if isFiltering {
-         place = filteredPlaces[indexPath.row]
-     } else  if firstSegmentSelected {
-         place = placesOfType[indexPath.section][indexPath.row]
-     } else {
-         place = places[indexPath.row]
-     }
-     return place
-    }
-    
-    private func setupViewForHeaderInSection(_ view: UIView, _ section: Int) {
-           view.backgroundColor = #colorLiteral(red: 0.588359559, green: 0.8278771763, blue: 0.9216118847, alpha: 1)
-           let label = UILabel(frame: CGRect(x: 15, y: -6, width: view.frame.width, height: 40))
-                  
-           label.font = UIFont(name: "Gilroy-Bold", size: 20)
-           label.textColor = .white
-           view.addSubview(label)
-                  
-           if firstSegmentSelected {
-               label.text = placesOfType[section][0].type
-           } else {
-               label.text = "Все места"
-           }
-       }
 }
