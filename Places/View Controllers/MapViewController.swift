@@ -2,7 +2,7 @@
 //  MapViewController.swift
 //  Places
 //
-//  Created by Айсен Шишигин on 24/07/2020.
+//  Created by Туйаара Оконешникова on 24/07/2020.
 //  Copyright © 2020 Туйаара Оконешникова. All rights reserved.
 //
 
@@ -167,6 +167,3 @@ extension MapViewController: CLLocationManagerDelegate {
         mapManager.checkLocationAuthorization(mapView: mapView, segueIdentifire: incomeSegueIdentifier)
     }
 }
-
-
-

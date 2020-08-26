@@ -2,7 +2,7 @@
 //  Extention NewPlaceViewController.swift
 //  Places
 //
-//  Created by Айсен Шишигин on 15/08/2020.
+//  Created by Туйаара Оконешникова on 15/08/2020.
 //  Copyright © 2020 Туйаара Оконешникова. All rights reserved.
 //
 
@@ -116,7 +116,12 @@ extension NewPlaceViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        typesRealm.count
+        if typesRealm.count == 0 {
+            for type in types {
+                StorageManager.saveType(Type(type: type))
+            }
+        }
+        return typesRealm.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {

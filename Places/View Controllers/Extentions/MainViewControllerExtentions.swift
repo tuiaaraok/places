@@ -2,7 +2,7 @@
 //  MainViewControllerExtentions.swift
 //  Places
 //
-//  Created by Айсен Шишигин on 26/08/2020.
+//  Created by Туйаара Оконешникова on 26/08/2020.
 //  Copyright © 2020 Туйаара Оконешникова. All rights reserved.
 //
 
@@ -61,16 +61,15 @@ extension MainViewController {
     }
     
     func getPlaceForCell( _ indexPath: IndexPath) -> Place{
-     
-     let place: Place
-     if isFiltering {
-         place = filteredPlaces[indexPath.row]
-     } else  if firstSegmentSelected {
-         place = placesOfType[indexPath.section][indexPath.row]
-     } else {
-         place = places[indexPath.row]
-     }
-     return place
+        let place: Place
+        if isFiltering {
+            place = filteredPlaces[indexPath.row]
+        } else  if firstSegmentSelected {
+            place = placesOfType[indexPath.section][indexPath.row]
+        } else {
+            place = places[indexPath.row]
+        }
+            return place
     }
     
     func setupViewForHeaderInSection(_ view: UIView, _ section: Int) {

@@ -126,13 +126,13 @@
 			path = "Support files";
 			sourceTree = "<group>";
 		};
-		6301A5CF24D0A084009AEC72 /* IBuilder */ = {
+		6301A5CF24D0A084009AEC72 /* UIBuilders */ = {
 			isa = PBXGroup;
 			children = (
 				63C01F6D24C828B10053A104 /* LaunchScreen.storyboard */,
 				63C01F6824C828B00053A104 /* Main.storyboard */,
 			);
-			path = IBuilder;
+			path = UIBuilders;
 			sourceTree = "<group>";
 		};
 		630EEF8224E85A050086BA2F /* Extentions */ = {
@@ -171,7 +171,7 @@
 				6301A5CD24D0A056009AEC72 /* Helpers */,
 				6301A5CC24D0A041009AEC72 /* Models */,
 				6301A5CE24D0A067009AEC72 /* Support files */,
-				6301A5CF24D0A084009AEC72 /* IBuilder */,
+				6301A5CF24D0A084009AEC72 /* UIBuilders */,
 			);
 			path = Places;
 			sourceTree = "<group>";

@@ -2,7 +2,7 @@
 //  NewPlaceViewController.swift
 //  Places
 //
-//  Created by Айсен Шишигин on 22/07/2020.
+//  Created by Туйаара Оконешникова on 22/07/2020.
 //  Copyright © 2020 Туйаара Оконешникова. All rights reserved.
 //
 
@@ -17,10 +17,9 @@ class NewPlaceViewController: UITableViewController {
     var imageIsChanged = false
     var currentRating = 0.0
     var typePickerView = UIPickerView()
-    var textViewPlaceholderText: String = "Добавьте описание"
+    var textViewPlaceholderText = "Добавьте описание"
     var typesRealm: Results<Type>!
     var types = ["Ресторан", "Кафе", "Приключения", "Путешествия", "Событие"]
-
 
     @IBOutlet var placeImage: UIImageView!
     @IBOutlet var saveButton: UIBarButtonItem!
