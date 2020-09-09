@@ -65,7 +65,7 @@ extension NewPlaceViewController: UITextViewDelegate {
         }
     }
     
-    func setupTextView() {
+    func configureTextView() {
         
         placeDescription.delegate = self
         placeDescription.text = textViewPlaceholderText
@@ -146,7 +146,7 @@ extension NewPlaceViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         return title
     }
     
-    func setupPickerView() {
+    func configurePickerView() {
         typePickerView.delegate = self
         typePickerView.dataSource = self
         typePickerView.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)

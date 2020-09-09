@@ -47,10 +47,10 @@ class NewPlaceViewController: UITableViewController {
             self.currentRating = rating
         }
         
-        setupTextView()
+        configureTextView()
         setupEditScreen()
         setupNavigationBarItem()
-        setupPickerView()
+        configurePickerView()
     }
        
     // MARK: - Table view delegate
