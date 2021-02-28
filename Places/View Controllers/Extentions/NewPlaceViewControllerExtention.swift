@@ -133,7 +133,7 @@ extension NewPlaceViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         placeType.text = typesRealm[row].type
-        placeType.resignFirstResponder()
+//        placeType.resignFirstResponder()
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
